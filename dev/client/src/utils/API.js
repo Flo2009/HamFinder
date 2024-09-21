@@ -3,21 +3,24 @@ import RadioBrowser from 'radio-browser';
 export const searchRadioStations = async (query) => {
   let filter = {
     limit: 5,
-    by: 'tag',
-    searchterm: JSON.stringify(query)
+    by: 'tag',         // Searching by tag, adjust as needed
+    search: query  // Directly pass the search term
   }
-  console.log(JSON.stringify(query));
-  // RadioBrowser.getStations(filter)
-  //   .then(data => console.log(data))
-  //   .catch(error => console.error(error))
-  const radioStation = await RadioBrowser.getStations (filter)
-    try{
-      if (!radioStation) throw Error ('Radio Station not found!');
-      console.log(radioStation);
-      return radioStation;
-      
-    }catch(error){
-      console.log('Process Failed to Execute!', error);
-      throw error;
+
+  console.log(query);  // No need to stringify
+
+  try {
+    const radioStation = await RadioBrowser.getStations(filter);
+    
+    if (!radioStation || radioStation.length === 0) {
+      throw new Error('No radio stations found!');
     }
-}
+    
+    console.log(radioStation);
+    return radioStation;
+
+  } catch (error) {
+    console.error('Process Failed to Execute!', error);
+    throw error;  // Re-throw the error after logging it
+  }
+};
