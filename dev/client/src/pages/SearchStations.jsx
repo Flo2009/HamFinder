@@ -13,10 +13,10 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { searchGoogleStations } from '../utils/API';
+import { searchRadioStations } from '../utils/API';
 import { saveStationIds, getSavedStationIds } from '../utils/localStorage';
 
-// const [saveStation] = useMutation(SAVE_STATION);
+// const [saveBook] = useMutation(SAVE_BOOK);
 
 const SearchStations = () => {
   // create state for holding returned google api data
@@ -24,16 +24,16 @@ const SearchStations = () => {
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
-  // create state to hold saved stationId values
+  // create state to hold saved bookId values
   const [savedStationIds, setSavedStationIds] = useState(getSavedStationIds());
   const [saveStation] = useMutation(SAVE_STATION);
-  // set up useEffect hook to save `savedStationIds` list to localStorage on component unmount
+  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveStationIds(savedStationIds);
   });
 
-  // create method to search for stations and set state on form submit
+  // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -42,33 +42,33 @@ const SearchStations = () => {
     }
 
     try {
-      const response = await searchGoogleStations(searchInput);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
+      const response = await searchRadioStations(searchInput);
+      console.log("response", response)
+      
+      if (!response || response.length === 0) {
+        throw new Error('No stations found!');
       }
 
-      const { items } = await response.json();
-
-      const stationData = items.map((station) => ({
-        stationId: station.id,
-        authors: station.volumeInfo.authors || ['No author to display'],
-        title: station.volumeInfo.title,
-        description: station.volumeInfo.description,
-        image: station.volumeInfo.imageLinks?.thumbnail || '',
+      const stationData = response.map((station) => ({
+        stationId: station.stationuuid,     // Adjust the property names as per the API response
+        title: station.name,                // Adjust property names as per the API response
+        description: station.country,       // You can adjust this as per the station object
+        image: station.favicon || '',       // This is optional if you want to display images
+        url: station.url_resolved,
       }));
 
       setSearchedStations(stationData);
       setSearchInput('');
+
     } catch (err) {
       console.error(err);
     }
   };
 
-  // create function to handle saving a station to our database
+  // create function to handle saving a book to our database
   const handleSaveStation = async (stationId) => {
-    // find the station in `searchedStations` state by the matching id
-    const stationToSave = searchedStations.find((station) => station.stationId === stationId);
+    // find the book in `searchedBooks` state by the matching id
+    const stationToSave = searchedStations.find((station) => station.bookId === stationId);
     
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -78,7 +78,7 @@ const SearchStations = () => {
     }
 
     try {
-      // Call the SAVE_STATION mutation
+      // Call the SAVE_BOOK mutation
        const { data } = await saveStation({
         variables: { stationData: stationToSave },
         context: {
@@ -92,7 +92,7 @@ const SearchStations = () => {
         throw new Error('Something went wrong!');
       }
 
-      // if station successfully saves to user's account, save station id to state
+      // if book successfully saves to user's account, save book id to state
       setSavedStationIds([...savedStationIds, stationToSave.stationId]);
     } catch (err) {
       console.error(err);
@@ -103,7 +103,7 @@ const SearchStations = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Search for Stations!</h1>
+          <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -113,7 +113,7 @@ const SearchStations = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Search for a station'
+                  placeholder='Search for a book'
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -130,32 +130,34 @@ const SearchStations = () => {
         <h2 className='pt-5'>
           {searchedStations.length
             ? `Viewing ${searchedStations.length} results:`
-            : 'Search for a station to begin'}
+            : 'Search for a book to begin'}
         </h2>
         <Row>
           {searchedStations.map((station) => {
             return (
               <Col md="4" key={station.stationId}>
-                <Card border='dark'>
-                  {station.image ? (
-                    <Card.Img src={station.image} alt={`The cover for ${station.title}`} variant='top' />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{station.title}</Card.Title>
-                    <p className='small'>Authors: {station.authors}</p>
-                    <Card.Text>{station.description}</Card.Text>
-                    {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveStation(station.stationId)}>
-                        {savedStationIds?.some((savedStationId) => savedStationId === station.stationId)
-                          ? 'This station has already been saved!'
-                          : 'Save this Station!'}
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
+                <a href= {station.url}>
+                  <Card border='dark'>
+                    {station.image ? (
+                      <Card.Img  src={station.image} alt={`The cover for ${station.title}`} variant='top' />
+                    ) : null}
+                    <Card.Body>
+                      <Card.Title>{station.title}</Card.Title>
+                      
+                      <Card.Text>{station.description}</Card.Text>
+                      {Auth.loggedIn() && (
+                        <Button
+                          disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
+                          className='btn-block btn-info'
+                          onClick={() => handleSaveStation(station.stationId)}>
+                          {savedStationIds?.some((savedStationId) => savedStationId === book.stationId)
+                            ? 'This station has already been saved!'
+                            : 'Save this Station!'}
+                        </Button>
+                      )}
+                    </Card.Body>
+                  </Card>
+                </a>
               </Col>
             );
           })}
