@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks, searchRadioStations } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 // const [saveBook] = useMutation(SAVE_BOOK);
@@ -42,7 +42,7 @@ const SearchStations = () => {
     }
 
     try {
-      const response = await searchGoogleBooks(searchInput);
+      const response = await searchRadioStations(searchInput);
 
       if (!response.ok) {
         throw new Error('something went wrong!');

@@ -1,3 +1,5 @@
+import RadioBrowser from 'radio-browser';
+
 // route to get logged in user's info (needs the token)
 export const getMe = (token) => {
   return fetch('/api/users/me', {
@@ -50,6 +52,27 @@ export const deleteBook = (bookId, token) => {
   });
 };
 
+export const searchRadioStations = async (query) => {
+  let filter = {
+    limit: 5,
+    by: 'topvote',
+    // searchterm: JSON.stringify(query)
+  }
+  console.log(JSON.stringify(query));
+  RadioBrowser.getStations(filter)
+    .then(data => console.log(data))
+    .catch(error => console.error(error))
+  // const radioStation = await RadioBrowser.getStations (filter)
+  //   try{
+  //     if (!radioStation) throw Error ('Radio Station not found!');
+  //     console.log(radioStation);
+  //     return radioStation;
+      
+  //   }catch(error){
+  //     console.log('Process Failed to Execute!', error);
+  //     throw error;
+  //   }
+}
 // make a search to google books api
 // https://www.googleapis.com/books/v1/volumes?q=harry+potter
 export const searchGoogleBooks = (query) => {
