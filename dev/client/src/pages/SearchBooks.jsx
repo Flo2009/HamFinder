@@ -18,15 +18,15 @@ import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 // const [saveBook] = useMutation(SAVE_BOOK);
 
-const SearchBooks = () => {
+const SearchStations = () => {
   // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([]);
+  const [searchedStations, setSearchedStations] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
   // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
-  const [saveBook] = useMutation(SAVE_BOOK);
+  const [savedStationIds, setSavedStationIds] = useState(getSavedStationIds());
+  const [saveStation] = useMutation(SAVE_STATION);
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
