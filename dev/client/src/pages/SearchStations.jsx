@@ -50,15 +50,14 @@ const SearchStations = () => {
 
       const { items } = await response.json();
 
-      const bookData = items.map((book) => ({
-        bookId: book.id,
-        authors: book.volumeInfo.authors || ['No author to display'],
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
+      const stationData = items.map((station) => ({
+        stationId: station.id,
+        title: station.volumeInfo.title,
+        description: station.volumeInfo.description,
+        image: station.volumeInfo.imageLinks?.thumbnail || '',
       }));
 
-      setSearchedBooks(bookData);
+      setSearchedSations(stationData);
       setSearchInput('');
     } catch (err) {
       console.error(err);
@@ -66,9 +65,9 @@ const SearchStations = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveBook = async (bookId) => {
+  const handleSaveStation = async (stationId) => {
     // find the book in `searchedBooks` state by the matching id
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    const stationToSave = searchedStations.find((station) => station.bookId === stationId);
     
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -79,8 +78,8 @@ const SearchStations = () => {
 
     try {
       // Call the SAVE_BOOK mutation
-       const { data } = await saveBook({
-        variables: { bookData: bookToSave },
+       const { data } = await saveStation({
+        variables: { stationData: stationToSave },
         context: {
           headers: {
             authorization: `Bearer ${token}`,
@@ -93,7 +92,7 @@ const SearchStations = () => {
       }
 
       // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedStationIds([...savedStationIds, stationToSave.stationId]);
     } catch (err) {
       console.error(err);
     }
@@ -128,30 +127,30 @@ const SearchStations = () => {
 
       <Container>
         <h2 className='pt-5'>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
+          {searchedStations.length
+            ? `Viewing ${searchedStations.length} results:`
             : 'Search for a book to begin'}
         </h2>
         <Row>
-          {searchedBooks.map((book) => {
+          {searchedStations.map((station) => {
             return (
-              <Col md="4" key={book.bookId}>
+              <Col md="4" key={station.stationId}>
                 <Card border='dark'>
-                  {book.image ? (
-                    <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
+                  {station.image ? (
+                    <Card.Img src={station.image} alt={`The cover for ${station.title}`} variant='top' />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
-                    <Card.Text>{book.description}</Card.Text>
+                    <Card.Title>{station.title}</Card.Title>
+                    
+                    <Card.Text>{station.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
+                        disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
                         className='btn-block btn-info'
-                        onClick={() => handleSaveBook(book.bookId)}>
-                        {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                          ? 'This book has already been saved!'
-                          : 'Save this Book!'}
+                        onClick={() => handleSaveStation(station.stationId)}>
+                        {savedStationIds?.some((savedStationId) => savedStationId === book.stationId)
+                          ? 'This station has already been saved!'
+                          : 'Save this Station!'}
                       </Button>
                     )}
                   </Card.Body>
