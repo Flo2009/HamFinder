@@ -12,7 +12,7 @@ import {
 
 
 import Auth from '../utils/auth';
-import { removeBookId } from '../utils/localStorage';
+import { removeStationId } from '../utils/localStorage';
 
 const SavedBooks = () => {
   // Apollo Client's useQuery to get user data
