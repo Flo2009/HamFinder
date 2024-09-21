@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client'
-import { SAVE_BOOK } from '../utils/mutations';
+import { SAVE_STATION } from '../utils/mutations';
 
 import {
   Container,
@@ -30,7 +30,7 @@ const SearchStations = () => {
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
+    return () => saveStationIds(savedStationIds);
   });
 
   // create method to search for books and set state on form submit
