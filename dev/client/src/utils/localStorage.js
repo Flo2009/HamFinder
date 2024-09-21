@@ -14,7 +14,7 @@ export const saveStationIds = (stationIdArr) => {
   }
 };
 
-export const removeStationId = (bookId) => {
+export const removeStationId = (stationId) => {
   const savedStationIds = localStorage.getItem('saved_stations')
     ? JSON.parse(localStorage.getItem('saved_stations'))
     : null;
