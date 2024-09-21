@@ -136,26 +136,28 @@ const SearchStations = () => {
           {searchedStations.map((station) => {
             return (
               <Col md="4" key={station.stationId}>
-                <Card border='dark'>
-                  {station.image ? (
-                    <Card.Img src={station.image} alt={`The cover for ${station.title}`} variant='top' />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{station.title}</Card.Title>
-                    
-                    <Card.Text>{station.description}</Card.Text>
-                    {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveStation(station.stationId)}>
-                        {savedStationIds?.some((savedStationId) => savedStationId === book.stationId)
-                          ? 'This station has already been saved!'
-                          : 'Save this Station!'}
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
+                <a href= {station.url}>
+                  <Card border='dark'>
+                    {station.image ? (
+                      <Card.Img  src={station.image} alt={`The cover for ${station.title}`} variant='top' />
+                    ) : null}
+                    <Card.Body>
+                      <Card.Title>{station.title}</Card.Title>
+                      
+                      <Card.Text>{station.description}</Card.Text>
+                      {Auth.loggedIn() && (
+                        <Button
+                          disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
+                          className='btn-block btn-info'
+                          onClick={() => handleSaveStation(station.stationId)}>
+                          {savedStationIds?.some((savedStationId) => savedStationId === book.stationId)
+                            ? 'This station has already been saved!'
+                            : 'Save this Station!'}
+                        </Button>
+                      )}
+                    </Card.Body>
+                  </Card>
+                </a>
               </Col>
             );
           })}
