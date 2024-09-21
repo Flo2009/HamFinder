@@ -14,7 +14,7 @@ const resolvers = {
       if (!context.user){
         throw new AuthenticationError("Please Log In!");
       }
-      const user = await User.findById(context.user._id).populate('savedBooks');
+      const user = await User.findById(context.user._id).populate('savedStations');
       return user;
     },
     
@@ -63,28 +63,28 @@ const resolvers = {
         user,
       };
     },
-    saveBook: async (parent, { bookData }, context) => {
+    saveStation: async (parent, { stationData }, context) => {
       if (!context.user){
         throw new AuthenticationError('You need to log in!');
       }
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
-        { $addToSet: { savedBooks:  bookData  } },
+        { $addToSet: { savedStations:  stationData  } },
         { new: true, runValidators: true }
-      ).populate('savedBooks');
+      ).populate('savedStations');
 
       return updatedUser;
 
     },
-    removeBook: async (parent, { bookId }, context) => {
+    removeStation: async (parent, { stationId }, context) => {
       if (!context.user){
         throw new AuthenticationError('You need to log in!')
       };
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
-        { $pull: { savedBooks: { bookId } } },
+        { $pull: { savedStations: { stationId } } },
         { new: true }
-      ).populate('savedBooks');
+      ).populate('savedStations');
       
       return updatedUser;
     },
