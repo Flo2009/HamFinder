@@ -14,7 +14,7 @@ import {
 
 import Auth from '../utils/auth';
 import { searchRadioStations } from '../utils/API';
-import { saveStationIds, getStationBookIds } from '../utils/localStorage';
+import { saveStationIds, getSavedStationIds } from '../utils/localStorage';
 
 // const [saveBook] = useMutation(SAVE_BOOK);
 
@@ -165,4 +165,4 @@ const SearchStations = () => {
   );
 };
 
-export default SearchBooks;
+export default SearchStations;

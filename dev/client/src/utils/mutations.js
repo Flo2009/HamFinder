@@ -27,7 +27,7 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_STATION = gql`
-  mutation saveBook ($stationData: StationInput!) {
+  mutation saveStation ($stationData: StationInput!) {
     saveStation(bookStation: $stationData) {
       _id
       username
