@@ -43,22 +43,23 @@ const SearchStations = () => {
 
     try {
       const response = await searchRadioStations(searchInput);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
+      console.log("response", response)
+      
+      if (!response || response.length === 0) {
+        throw new Error('No stations found!');
       }
 
-      const { items } = await response.json();
-
-      const stationData = items.map((station) => ({
-        stationId: station.id,
-        title: station.volumeInfo.title,
-        description: station.volumeInfo.description,
-        image: station.volumeInfo.imageLinks?.thumbnail || '',
+      const stationData = response.map((station) => ({
+        stationId: station.stationuuid,     // Adjust the property names as per the API response
+        title: station.name,                // Adjust property names as per the API response
+        description: station.country,       // You can adjust this as per the station object
+        image: station.favicon || '',       // This is optional if you want to display images
+        url: station.url_resolved,
       }));
 
-      setSearchedSations(stationData);
+      setSearchedStations(stationData);
       setSearchInput('');
+
     } catch (err) {
       console.error(err);
     }
