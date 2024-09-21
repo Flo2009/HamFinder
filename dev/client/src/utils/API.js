@@ -1,26 +1,37 @@
-import RadioBrowser from 'radio-browser';
-
 export const searchRadioStations = async (query) => {
+  const baseURL = 'https://de1.api.radio-browser.info/json/stations/search';
+  
   let filter = {
-    limit: 5,
-    by: 'tag',         // Searching by tag, adjust as needed
-    search: query  // Directly pass the search term
-  }
+    name: query,
+    limit: 5,         // Limit results
+    tag: query,       // Search by tag
+  };
 
-  console.log(query);  // No need to stringify
+  // Construct the URL with query parameters using URLSearchParams
+  const params = new URLSearchParams(filter).toString();
+  const url = `${baseURL}?${params}`;
+
+  console.log('Querying:', query);
 
   try {
-    const radioStation = await RadioBrowser.getStations(filter);
+    // Fetch the data from the Radio Browser API
+    const response = await fetch(url);
     
-    if (!radioStation || radioStation.length === 0) {
+    if (!response.ok) {
+      throw new Error('Failed to fetch radio stations');
+    }
+
+    const radioStations = await response.json();
+    
+    if (!radioStations || radioStations.length === 0) {
       throw new Error('No radio stations found!');
     }
-    
-    console.log(radioStation);
-    return radioStation;
+
+    console.log(radioStations);
+    return radioStations;
 
   } catch (error) {
     console.error('Process Failed to Execute!', error);
-    throw error;  // Re-throw the error after logging it
+    throw error;
   }
 };
