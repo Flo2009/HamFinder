@@ -6,13 +6,15 @@ export const GET_ME = gql`
       _id
       username
       email
-      bookCount
+      stationCount
       savedStations {
         stationId
-        description
-        title
+        name
+        country
         image
-        link
+        url
+        homepage
+        clickcount
       }
     }
   }

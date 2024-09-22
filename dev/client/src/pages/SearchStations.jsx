@@ -51,10 +51,12 @@ const SearchStations = () => {
 
       const stationData = response.map((station) => ({
         stationId: station.stationuuid,     // Adjust the property names as per the API response
-        title: station.name,                // Adjust property names as per the API response
-        description: station.country,       // You can adjust this as per the station object
-        image: station.favicon || '',       // This is optional if you want to display images
+        name: station.name,                // Adjust property names as per the API response
+        country: station.country,       // You can adjust this as per the station object
+        image: station.favicon || '',       // display the station image if there is one
         url: station.url_resolved,
+        homepage:station.homepage,
+        clickcount: station.clickcount,
       }));
 
       setSearchedStations(stationData);
@@ -67,8 +69,9 @@ const SearchStations = () => {
 
   // create function to handle saving a book to our database
   const handleSaveStation = async (stationId) => {
+    console.log(stationId);
     // find the book in `searchedBooks` state by the matching id
-    const stationToSave = searchedStations.find((station) => station.bookId === stationId);
+    const stationToSave = searchedStations.find((station) => station.stationId === stationId);
     
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -78,7 +81,7 @@ const SearchStations = () => {
     }
 
     try {
-      // Call the SAVE_BOOK mutation
+      // Call the SAVE_STATION mutation
        const { data } = await saveStation({
         variables: { stationData: stationToSave },
         context: {
@@ -92,7 +95,7 @@ const SearchStations = () => {
         throw new Error('Something went wrong!');
       }
 
-      // if book successfully saves to user's account, save book id to state
+      // if sation successfully saves to user's account, save station id to state
       setSavedStationIds([...savedStationIds, stationToSave.stationId]);
     } catch (err) {
       console.error(err);
@@ -103,7 +106,7 @@ const SearchStations = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Search for Radio Stations!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -113,7 +116,7 @@ const SearchStations = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Search for a book'
+                  placeholder='Search for a Radio Station'
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -130,7 +133,7 @@ const SearchStations = () => {
         <h2 className='pt-5'>
           {searchedStations.length
             ? `Viewing ${searchedStations.length} results:`
-            : 'Search for a book to begin'}
+            : 'Search for a Radio Station to begin'}
         </h2>
         <Row>
           {searchedStations.map((station) => {
@@ -140,19 +143,23 @@ const SearchStations = () => {
                   <Card border='dark'>
                       <a href= {station.url}>
                         {station.image ? (
-                          <Card.Img  src={station.image} alt={`The cover for ${station.title}`} variant='top' />
+                          <Card.Img  src={station.image} alt={`The cover for ${station.name}`} variant='top' />
                         ) : null}
                       </a>
                       <Card.Body>
-                        <Card.Title>{station.title}</Card.Title>
-                        
-                        <Card.Text>{station.description}</Card.Text>
+                        <Card.Title>{station.name}</Card.Title>
+                        <a href= {station.homepage}>
+                          <Card.Text>Station Homepage</Card.Text>
+                        </a>
+                        <Card.Text>{station.country}</Card.Text>
+                        <Card.Text>Clicks:</Card.Text>
+                        <Card.Text>{station.clickcount}</Card.Text>
                         {Auth.loggedIn() && (
                           <Button
                             disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
                             className='btn-block btn-info'
                             onClick={() => handleSaveStation(station.stationId)}>
-                            {savedStationIds?.some((savedStationId) => savedStationId === book.stationId)
+                            {savedStationIds?.some((savedStationId) => savedStationId === station.stationId)
                               ? 'This station has already been saved!'
                               : 'Save this Station!'}
                           </Button>

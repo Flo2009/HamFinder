@@ -28,15 +28,17 @@ export const ADD_USER = gql`
 
 export const SAVE_STATION = gql`
   mutation saveStation ($stationData: StationInput!) {
-    saveStation(bookStation: $stationData) {
+    saveStation(stationData: $stationData) {
       _id
       username
       savedStations {
         stationId
-        title
-        description
+        name
+        country
+        clickcount
         image
-        link
+        url
+        homepage
       }
     }
   }

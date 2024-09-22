@@ -105,12 +105,14 @@ const SavedStations = () => {
           {userData.savedStations.map((station) => {
             return (
               <Col md="4">
-                <Card key={station.stationIdId} border='dark'>
-                  {station.image ? <Card.Img src={station.image} alt={`The cover for ${station.title}`} variant='top' /> : null}
+                <Card key={station.stationId} border='dark'>
+                  <a href={station.url}>{station.image ? <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> : null}</a>
                   <Card.Body>
-                    <Card.Title>{station.title}</Card.Title>
-                    <p className='small'>Authors: {station.authors}</p>
-                    <Card.Text>{station.description}</Card.Text>
+                    <Card.Title>{station.name}</Card.Title>
+                    <p className='small'>Homepage: {station.homepage}</p>
+                    <Card.Text>{station.country}</Card.Text>
+                    <Card.Text>Clicks:</Card.Text>
+                    <Card.Text>{station.clickcount}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteStation(station.stationId)}>
                       Delete this Station!
                     </Button>
