@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { signToken } = require ("../utils/auth")
 
-// const SECRET_KEY = 'mysecretsshhhhh';
-
 
 const resolvers = {
   Query: {
@@ -26,38 +24,28 @@ const resolvers = {
       if (!user){
         throw new AuthenticationError("Please Enter your Email!");
       }
-      // console.log(user.password, password);
       const isPasswordValid = await bcrypt.compare(password, user.password);
       console.log(isPasswordValid);
       if (!isPasswordValid){
         throw new AuthenticationError('Incorrect Password!');
       }
-      // const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '2h'});
       const token = signToken(user);
       return {
         token,
         user,
       };
     },
-    //username, email, password 
-    addUser: async (parent, { username, email, password }) => {
-      console.log(username);
-      console.log(email);
-      console.log(password);
-      // console.log(args);
+    //username, email, password, donationAmount, donated 
+    addUser: async (parent, { username, email, password, donationAmount, donated }) => {
+      
       const hashedPassword = await bcrypt.hash(password, 5)
       console.log(hashedPassword);
       const user = await User.create(
         
-        { username, email, password: hashedPassword } ,
-        // { email } ,
-        // { password: hashedPassword } ,
-        // { new: true }
+        { username, email, password: hashedPassword, donationAmount, donated } ,
+        
       );
-      
-      // console.log(user);
-      // const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '2h'});
-     const token = signToken(user);
+      const token = signToken(user);
       return {
         token,
         user,
@@ -86,6 +74,18 @@ const resolvers = {
         { new: true }
       ).populate('savedStations');
       
+      return updatedUser;
+    },
+
+    addDonation: async (parent, { donationAmount }, context) => {
+      if (!context.user){
+        throw new AuthenticationError('You need to log in!')
+      };
+      const updatedUser = await User.findByIdAndUpdate(
+        context.user._id,
+        { $addToSet: { donationAmount:  donationAmount, donated: true } },
+        { new: true, runValidators: true }
+      );
       return updatedUser;
     },
   },

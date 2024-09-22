@@ -43,6 +43,7 @@ const typeDefs = `
     addUser(username: String!, email: String!, password: String!, donationAmount: Float, donated: Boolean): Auth
     saveStation(stationData: StationInput!): User
     removeStation(staionId: String!): User
+    updateUser(donationAmount: Float, donated: Boolean): User
   }
 `;
 
