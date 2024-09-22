@@ -21,6 +21,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    donationAmount: {
+      type: Number,
+    },
+    donated: {
+      type: Boolean,
+    },
     // set savedStations to be an array of data that adheres to the stationSchema
     savedStations: [stationSchema],
   },
