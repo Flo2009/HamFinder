@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 
 // This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's `savedStations` array in User.js
 const stationSchema = new Schema({
-  authors: [
+location: [
     {
       type: String,
     },
@@ -22,7 +22,7 @@ const stationSchema = new Schema({
   link: {
     type: String,
   },
-  title: {
+name: {
     type: String,
     required: true,
   },
