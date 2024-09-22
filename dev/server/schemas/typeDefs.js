@@ -3,17 +3,20 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
+    donationAmount: Float
+    donated: Boolean
     stationCount: Int
     savedStations: [Station]
   }
 
   type Station {
     stationId: String!
-    location: [String]
-    description: String!
+    country: String
+    clickcount: Int
     name: String!
     image: String
-    link: String
+    url: String
+    homepage: String
   }
 
   type Auth {
@@ -26,17 +29,18 @@ const typeDefs = `
   }
 
   input StationInput{
-    location:[String]
-    description: String!
-   name: String!
+    country:String
+    clickcount: Int
+    name: String!
     stationId: String!
     image: String
-    link: String
+    url: String
+    homepage: String
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!, donationAmount: Float, donated: Boolean): Auth
     saveStation(stationData: StationInput!): User
     removeStation(staionId: String!): User
   }
