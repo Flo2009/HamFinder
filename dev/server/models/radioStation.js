@@ -11,7 +11,7 @@ const stationSchema = new Schema({
     type: String,
     required: true,
   },
-  // saved station id from GoogleStations
+  // saved station id from API
   stationId: {
     type: String,
     required: true,
