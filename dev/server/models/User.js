@@ -40,7 +40,7 @@ const userSchema = new Schema(
 
 
 
-// // custom method to compare and validate password for logging in
+// custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
