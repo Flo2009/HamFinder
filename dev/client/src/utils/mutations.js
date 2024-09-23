@@ -51,7 +51,7 @@ export const REMOVE_STATION = gql`
       username
       savedStations {
         stationId
-        title
+        name
       }
     }
   }

@@ -42,7 +42,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!, donationAmount: Float, donated: Boolean): Auth
     saveStation(stationData: StationInput!): User
-    removeStation(staionId: String!): User
+    removeStation(stationId: String!): User
     addDonation(donationAmount: Float): User
   }
 `;
