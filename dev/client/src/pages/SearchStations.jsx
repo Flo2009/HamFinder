@@ -67,7 +67,7 @@ const SearchStations = () => {
     }
   };
 
-  // create function to handle saving a book to our database
+  // create function to handle saving a station to our database
   const handleSaveStation = async (stationId) => {
     console.log(stationId);
     // find the book in `searchedBooks` state by the matching id
