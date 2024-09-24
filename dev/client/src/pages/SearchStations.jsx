@@ -1,20 +1,12 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useMutation } from '@apollo/client'
+import React, { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/client';
 import { SAVE_STATION } from '../utils/mutations';
-
-import {
-  Container,
-  Col,
-  Form,
-  Button,
-  Card,
-  Row
-} from 'react-bootstrap';
-
+import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { searchRadioStations } from '../utils/API';
 import { saveStationIds, getSavedStationIds } from '../utils/localStorage';
+import { generateSVGPlaceholder } from '../utils/SVG';
+
 
 // const [saveBook] = useMutation(SAVE_BOOK);
 
@@ -26,50 +18,68 @@ const SearchStations = () => {
 
   // create state to hold saved bookId values
   const [savedStationIds, setSavedStationIds] = useState(getSavedStationIds());
+  // State for handling errors
+  const [error, setError] = useState(null); // <-- Add this line
+
   const [saveStation] = useMutation(SAVE_STATION);
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+
+  // Create a dark mode state
+  const [isDarkMode, setIsDarkMode] = useState(false); // <-- Dark mode state
+
   useEffect(() => {
     return () => saveStationIds(savedStationIds);
-  });
+  }, [savedStationIds]);
+
+  // Utility function to generate a random color
+  const generateRandomColor = () => {
+    return Math.floor(Math.random() * 16777215).toString(16);
+  };
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     if (!searchInput) {
+      setError('Please enter a search term.');
       return false;
     }
 
     try {
-      const response = await searchRadioStations(searchInput);
-      console.log("response", response)
+      const query = searchInput.toLowerCase();
+
+      console.log("Querying:", query); // <-- Log the query input
+      const response = await searchRadioStations(query);
+      console.log("API Response:", response); // <-- Log the API response
       
       if (!response || response.length === 0) {
-        throw new Error('No stations found!');
+        setError(`No stations found for the term: ${searchInput}`);
+        return;
       }
 
       const stationData = response.map((station) => ({
-        stationId: station.stationuuid,     // Adjust the property names as per the API response
-        name: station.name,                // Adjust property names as per the API response
-        country: station.country,       // You can adjust this as per the station object
-        image: station.favicon || '',       // display the station image if there is one
+        stationId: station.stationuuid,
+        name: station.name,
+        country: station.country,
+        image: station.favicon || '',
         url: station.url_resolved,
         homepage:station.homepage,
         clickcount: station.clickcount,
+        color: generateRandomColor(),  // <-- Add this line to assign a color
       }));
 
       setSearchedStations(stationData);
       setSearchInput('');
-
+      setError (null);
     } catch (err) {
+      setError('There was an error processing your search.')
       console.error(err);
     }
   };
 
   // create function to handle saving a station to our database
   const handleSaveStation = async (stationId) => {
-    console.log(stationId);
+    // console.log(stationId);
+
     // find the book in `searchedBooks` state by the matching id
     const stationToSave = searchedStations.find((station) => station.stationId === stationId);
     
@@ -104,8 +114,21 @@ const SearchStations = () => {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      {/* Toggle Dark Mode Button */}
+      <div className="p-3">
+        <Button onClick={() => setIsDarkMode(!isDarkMode)} variant="secondary">
+          {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        </Button>
+      </div>
+
+      {/* Main Search Section */}
+      <div className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
         <Container>
+          {/* {error && (
+            <Alert variant="danger" onClose={() => setError(null)} dismissible>
+              {error}
+            </Alert>
+          )} */}
           <h1>Search for Radio Stations!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
@@ -116,7 +139,7 @@ const SearchStations = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Search for a Radio Station'
+                  placeholder='Search for Radio Stations'
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -133,7 +156,7 @@ const SearchStations = () => {
         <h2 className='pt-5'>
           {searchedStations.length
             ? `Viewing ${searchedStations.length} results:`
-            : 'Search for a Radio Station to begin'}
+            : ''}
         </h2>
         <Row>
           {searchedStations.map((station) => {
@@ -144,7 +167,9 @@ const SearchStations = () => {
                       <a href= {station.url}>
                         {station.image ? (
                           <Card.Img  src={station.image} alt={`The cover for ${station.name}`} variant='top' />
-                        ) : null}
+                        ) : (  
+                          <Card.Img src={generateSVGPlaceholder(station.name, station.color)} alt={`Placeholder for ${station.name}`} variant='top' />
+                        )}
                       </a>
                       <Card.Body>
                         <Card.Title>{station.name}</Card.Title>

@@ -4,7 +4,7 @@ export const searchRadioStations = async (query) => {
   // Define filter as an object
   let filter = {
     name: query,
-    limit: 5,         // Limit results
+    limit: 6,         // Limit results
     tag: query,       // Search by tag
   };
 
@@ -12,7 +12,8 @@ export const searchRadioStations = async (query) => {
   const params = new URLSearchParams(filter).toString();
   const url = `${baseURL}?${params}`;
 
-  console.log('Querying:', query);
+  console.log("Query Parameters:", params);
+  console.log("Constructed URL:", url);
 
   try {
     // Fetch the data from the Radio Browser API

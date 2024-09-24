@@ -1,17 +1,150 @@
+/* General Styles */
 body {
   font-family: 'Rubik', sans-serif;
+  background-color: #F5F5F5; /* Adjust this for light mode */
+  color: #333;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Rubik Mono One', sans-serif;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .small {
   font-weight: 300;
   font-style: italic;
+}
+
+/* Search Input */
+.search-input {
+  background-color: #F2F2F2;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.search-input::placeholder {
+  color: #A0A0A0;
+  font-style: italic;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #FFD9E8; /* Light background */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: #333;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  color: #00796B; /* Adjust to your desired accent color */
+}
+
+/* Top Station Cards */
+.station-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.station-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Saved and Search Stations Pages */
+.saved-stations-page, .search-stations-page {
+  padding: 20px;
+}
+
+.saved-stations-page h2, .search-stations-page h2 {
+  margin-bottom: 30px;
+}
+
+/* Forms (Login, Signup) */
+.form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Buttons */
+.button {
+  background-color: #00796B; /* Accent color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #004D40;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #333;
+  color: white;
+}
+
+.bg-dark {
+  background-color: #333;
+}
+
+.bg-light {
+  background-color: white;
+}
+
+body.dark-mode {
+  background-color: #1D1D1D;
+  color: #E0E0E0;
+}
+
+.navbar.dark-mode {
+  background-color: #2E2E2E;
+}
+
+.station-card.dark-mode {
+  background-color: #2E2E2E;
+  box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+.station-card.dark-mode:hover {
+  background-color: #3E3E3E;
+  box-shadow: 0px 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.form.dark-mode {
+  background-color: #2E2E2E;
 }
