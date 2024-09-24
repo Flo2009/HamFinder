@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import logo from '../assets/images/logo.png'
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 import Auth from '../utils/auth';
@@ -30,9 +31,10 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
         >
           {/* Add the logo image */}
           <img 
-            src={} 
+            src={logo} 
             alt="HamFinder Logo" 
             style={{ width: '40px', height: '40px', marginRight: '10px' }}
+            id="hamfinder-logo"
           />
           <span className="hamfinder-ham">Ham</span><span className="hamfinder-finder">Finder</span>
         </Navbar.Brand>
