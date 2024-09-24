@@ -117,7 +117,7 @@ h1 {
 }
 
 /* Buttons */
-.btn-primary {
+button {
   background-color: var(--button-background-color);
   color: var(--button-text-color);
   border-color: var(--button-background-color);
@@ -126,7 +126,7 @@ h1 {
   transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease, transform 0.2s ease;
 }
 
-.btn-primary:hover {
+button:hover {
   background-color: #0056b3;
   border-color: #0056b3;
   transform: scale(1.05); /* Slight enlargement on hover */
