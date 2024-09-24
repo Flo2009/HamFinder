@@ -38,10 +38,12 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
               )}
               {/* Dark Mode Toggle Button */}
-              <Button variant="link" className={`analog-switch ${isDarkMode ? 'dark' : ''}`} onClick={() => setIsDarkMode(!isDarkMode)}>
-                <span className="switch-knob"></span>
-                <span className="switch-label">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
-              </Button>
+              <Nav.Item>
+                <Button variant="link" className={`analog-switch ${isDarkMode ? 'dark' : ''}`} onClick={() => setIsDarkMode(!isDarkMode)}>
+                  <span className="switch-knob"></span>
+                  <span className="switch-label">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
+                </Button>
+              </Nav.Item>
             </Nav>
           </Navbar.Collapse>
         </Container>

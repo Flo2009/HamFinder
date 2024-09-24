@@ -10,6 +10,7 @@
   --button-text-color: #ffffff;
   --border-color: #999; /* More metallic border */
   --heading-color: #333333; /* Darker heading text */
+  --hover-color: #000000; /* Hover color for light mode */
 }
 
 .dark-mode {
@@ -23,6 +24,7 @@
   --button-text-color: #ffffff;
   --border-color: #555; /* Dark mode border */
   --heading-color: #f0f0f0;
+  --hover-color: #ffffff; /* Hover color for dark mode */
 }
 
 body, html {
@@ -79,11 +81,11 @@ h1 {
   text-decoration: none;
   margin: 0 15px;
   font-weight: 500;
-  transition: color 0.6s ease;
+  transition: color 0.3s ease;
 }
 
 .my-custom-navbar a:hover {
-  color: black; /* Accent hover color */
+  color: var(--hover-color);
 }
 
 #searchFormSection {
