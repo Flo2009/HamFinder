@@ -161,43 +161,59 @@ input[type="text"]::placeholder {
   color: var(--form-text-color);
 }
 
-/* Analog Switch for Light/Dark Mode (Placeholder styles) */
+/* Analog switch styling */
 .analog-switch {
   position: relative;
-  width: 80px;
-  height: 40px;
-  border: 2px solid var(--border-color);
-  border-radius: 20px;
-  background-color: var(--background-color);
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  background-color: #e0e0e0;
+  border-radius: 30px;
+  border: 2px solid #8c8c8c;
   cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
-  transition: background-color 0.6s ease, border-color 0.6s ease;
+  transition: background-color 0.4s ease;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
 
+/* Knob (the circular button part of the switch) */
 .switch-knob {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  background-color: var(--button-background-color);
-  border-radius: 50%;
-  transition: all 0.4s ease;
   top: 50%;
+  left: 4px;
   transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background-color: #b3b3b3; /* Grey color */
+  border-radius: 50%;
+  transition: left 0.4s ease, background-color 0.4s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15), inset 0 -2px 5px rgba(255, 255, 255, 0.4); /* Add glare effect */
 }
 
-.analog-switch.dark .switch-knob {
-  left: 5px; /* Light mode */
+/* Move the knob when in dark mode */
+.dark .switch-knob {
+  left: 32px; /* Position the knob to the right */
+  background-color: #555; /* Darker tone for the knob in dark mode */
 }
 
-.analog-switch .switch-knob {
-  right: 5px; /* Dark mode */
-}
-
+/* Hide the label when the knob covers it */
 .switch-label {
-  font-size: 12px;
-  color: var(--text-color);
-  transition: color 0.6s ease;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 14px;
+  color: #333; /* Light mode label color */
+  transition: opacity 0.4s ease, color 0.4s ease;
+}
+
+/* Label for dark mode */
+.dark .switch-label {
+  color: #f0f0f0;
+}
+
+/* Hide text when knob covers it */
+.analog-switch .switch-knob + .switch-label {
+  opacity: 0; /* Hide text completely */
 }
