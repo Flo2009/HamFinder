@@ -36,6 +36,7 @@ const typeDefs = `
     image: String
     url: String
     homepage: String
+    color: String
   }
 
   type Mutation {
