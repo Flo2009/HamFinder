@@ -4,7 +4,7 @@ export const searchRadioStations = async (query) => {
   // Define filter as an object
   let filter = {
     name: query,
-    limit: 5,         // Limit results
+    limit: 6,         // Limit results
     tag: query,       // Search by tag
   };
 

@@ -45,12 +45,15 @@ const SearchStations = () => {
     }
 
     try {
-      console.log("Querying:", searchInput); // <-- Log the query input
-      const response = await searchRadioStations(searchInput);
+      const query = searchInput.toLowerCase();
+
+      console.log("Querying:", query); // <-- Log the query input
+      const response = await searchRadioStations(query);
       console.log("API Response:", response); // <-- Log the API response
       
       if (!response || response.length === 0) {
-        throw new Error('No stations found!');
+        setError(`No stations found for the term: ${searchInput}`);
+        return;
       }
 
       const stationData = response.map((station) => ({
@@ -61,6 +64,7 @@ const SearchStations = () => {
         url: station.url_resolved,
         homepage:station.homepage,
         clickcount: station.clickcount,
+        color: generateRandomColor(),  // <-- Add this line to assign a color
       }));
 
       setSearchedStations(stationData);
