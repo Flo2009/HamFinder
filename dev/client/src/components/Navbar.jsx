@@ -10,13 +10,21 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
+const handleHomeClick = (event) => {
+  event.preventDefault();  // Prevent default link behavior
+  window.location.reload(); // Force page refresh
+};
+
   return (
     <>
       <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            HamFinder
-          </Navbar.Brand>
+        <Navbar.Brand 
+          className="hamfinder-custom" // Add inline styles
+          onClick={handleHomeClick} // Trigger page refresh
+        >
+          <span className="hamfinder-ham">Ham</span><span className="hamfinder-finder">Finder</span>
+        </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
