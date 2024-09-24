@@ -12,7 +12,8 @@ export const searchRadioStations = async (query) => {
   const params = new URLSearchParams(filter).toString();
   const url = `${baseURL}?${params}`;
 
-  console.log('Querying:', query);
+  console.log("Query Parameters:", params);
+  console.log("Constructed URL:", url);
 
   try {
     // Fetch the data from the Radio Browser API

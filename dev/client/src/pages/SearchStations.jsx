@@ -18,6 +18,9 @@ const SearchStations = () => {
 
   // create state to hold saved bookId values
   const [savedStationIds, setSavedStationIds] = useState(getSavedStationIds());
+  // State for handling errors
+  const [error, setError] = useState(null); // <-- Add this line
+
   const [saveStation] = useMutation(SAVE_STATION);
 
   // Create a dark mode state
@@ -26,6 +29,11 @@ const SearchStations = () => {
   useEffect(() => {
     return () => saveStationIds(savedStationIds);
   }, [savedStationIds]);
+
+  // Utility function to generate a random color
+  const generateRandomColor = () => {
+    return Math.floor(Math.random() * 16777215).toString(16);
+  };
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -37,9 +45,9 @@ const SearchStations = () => {
     }
 
     try {
-      // console.log("Querying:", searchInput); // <-- Log the query input
+      console.log("Querying:", searchInput); // <-- Log the query input
       const response = await searchRadioStations(searchInput);
-      // console.log("API Response:", response); // <-- Log the API response
+      console.log("API Response:", response); // <-- Log the API response
       
       if (!response || response.length === 0) {
         throw new Error('No stations found!');
@@ -59,8 +67,8 @@ const SearchStations = () => {
       setSearchInput('');
       setError (null);
     } catch (err) {
-      console.error(err);
       setError('There was an error processing your search.')
+      console.error(err);
     }
   };
 
@@ -156,7 +164,7 @@ const SearchStations = () => {
                         {station.image ? (
                           <Card.Img  src={station.image} alt={`The cover for ${station.name}`} variant='top' />
                         ) : (  
-                          <Card.Img src={generateSVGPlaceholder(station.name)} alt={`Placeholder for ${station.name}`} variant='top' />
+                          <Card.Img src={generateSVGPlaceholder(station.name, station.color)} alt={`Placeholder for ${station.name}`} variant='top' />
                         )}
                       </a>
                       <Card.Body>
