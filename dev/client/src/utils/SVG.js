@@ -1,6 +1,6 @@
 
 // Function to generate an SVG as a placeholder
-const generateSVGPlaceholder = (text) => {
+export const generateSVGPlaceholder = (text) => {
     const initials = text
       .split(' ')
       .map(word => word[0])

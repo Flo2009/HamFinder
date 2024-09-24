@@ -5,6 +5,7 @@ import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { searchRadioStations } from '../utils/API';
 import { saveStationIds, getSavedStationIds } from '../utils/localStorage';
+import { generateSVGPlaceholder } from '../utils/SVG';
 
 
 // const [saveBook] = useMutation(SAVE_BOOK);
@@ -154,7 +155,9 @@ const SearchStations = () => {
                       <a href= {station.url}>
                         {station.image ? (
                           <Card.Img  src={station.image} alt={`The cover for ${station.name}`} variant='top' />
-                        ) : null}
+                        ) : (  
+                          <Card.Img src={generateSVGPlaceholder(station.name)} alt={`Placeholder for ${station.name}`} variant='top' />
+                        )}
                       </a>
                       <Card.Body>
                         <Card.Title>{station.name}</Card.Title>
