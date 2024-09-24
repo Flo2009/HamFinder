@@ -98,15 +98,8 @@ h1 {
   transform: scale(1.03); /* Slightly enlarge on hover */
 }
 
-/* Container for logo and text */
-.hamfinder-container {
-  display: flex !important;
-  align-items: baseline !important;  /* Vertically center logo and text */
-}
-
 /* logo */
 #hamfinder-logo {
-  position: relative;
   top: -4px; /* Move the logo up */
   margin-right: 3px !important;
 }
