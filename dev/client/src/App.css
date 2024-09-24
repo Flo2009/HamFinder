@@ -2,14 +2,14 @@
 :root {
   --background-color: #f5f5f5; /* Light Mode */
   --text-color: #333333;
-  --navbar-background-color: #FFD9E8;
-  --card-background-color: #ffffff;
-  --form-background-color: #ffffff;
+  --navbar-background-color: #d9d9d9; /* Softer metal-like background */
+  --card-background-color: #eaeaea; /* Metallic light gray */
+  --form-background-color: #e0e0e0; /* Metallic light gray for form */
   --form-text-color: #333333;
   --button-background-color: #007bff;
   --button-text-color: #ffffff;
-  --border-color: #ccc; /* Light border */
-  --heading-color: #333333; /* Black header text for light mode */
+  --border-color: #999; /* More metallic border */
+  --heading-color: #333333; /* Darker heading text */
 }
 
 .dark-mode {
@@ -17,12 +17,12 @@
   --text-color: #f0f0f0;
   --navbar-background-color: #333333;
   --card-background-color: #2c2c2c;
-  --form-background-color: #444444; /* Dark background for form */
-  --form-text-color: #f0f0f0; /* Light text color for dark mode */
+  --form-background-color: #444444;
+  --form-text-color: #f0f0f0;
   --button-background-color: #007bff;
   --button-text-color: #ffffff;
-  --border-color: #555; /* Dark border */
-  --heading-color: #f0f0f0; /* White header text for dark mode */
+  --border-color: #555; /* Dark mode border */
+  --heading-color: #f0f0f0;
 }
 
 body, html {
@@ -37,6 +37,9 @@ body, html {
 /* Header Text */
 h1 {
   color: var(--heading-color); /* Dynamic heading color */
+  font-family: 'Rubik Mono One', sans-serif; /* Industrial font */
+  letter-spacing: 1px; /* Rugged look */
+  text-transform: uppercase; /* All caps for stronger impact */
   transition: color 0.6s ease;
 }
 
@@ -53,78 +56,21 @@ h1 {
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 
+/* Navbar */
 .navbar {
   background-color: var(--navbar-background-color) !important;
   color: var(--text-color);
+  border-bottom: 2px solid var(--border-color); /* Metallic border */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Softer shadow */
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 
-#searchFormSection {
-  background-color: var(--background-color);
-  transition: background-color 0.6s ease, color 0.6s ease;
-}
-
-.card {
-  background-color: var(--card-background-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
-  margin-bottom: 30px; /* Space between cards */
-  padding: 10px; /* Add inner padding for better structure */
-}
-
-.btn-primary {
-  background-color: var(--button-background-color);
-  color: var(--button-text-color);
-  border-color: var(--button-background-color);
-  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
-}
-
-/* Forms */
-.form-control {
-  background-color: var(--form-background-color);
-  color: var(--form-text-color);
-  border: 1px solid var(--border-color);
-  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
-  padding: 10px; /* Ensure padding is sufficient */
-}
-
-input[type="text"] {
-  background-color: var(--form-background-color); /* Change to match card colors */
-  color: var(--form-text-color);
-  border: 1px solid var(--border-color);
-  padding: 10px;
-  width: 100%;
-  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
-}
-
-input[type="text"]::placeholder {
-  color: var(--form-text-color); /* Placeholder text color */
-}
-
-.dark-mode input[type="text"] {
-  background-color: var(--form-background-color); /* Dark mode search bar background */
-  color: var(--form-text-color); /* Dark mode search text */
-  border: 1px solid var(--border-color);
-}
-
-.dark-mode input[type="text"]::placeholder {
-  color: var(--form-text-color);
-}
-
-/* Navbar */
 .my-custom-navbar {
-  background-color: var(--navbar-background-color) !important;
   padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 -1px 2px rgba(255, 255, 255, 0.3);
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 
@@ -137,5 +83,121 @@ input[type="text"]::placeholder {
 }
 
 .my-custom-navbar a:hover {
-  color: #00796B; /* Accent hover color */
+  color: black; /* Accent hover color */
+}
+
+#searchFormSection {
+  background-color: var(--background-color);
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Cards */
+.card {
+  background-color: var(--card-background-color);
+  color: var(--text-color);
+  border: 0.5px solid var(--border-color); /* More rugged border */
+  border-radius: 5px; /* Slight curve for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 -1px 1px rgba(255, 255, 255, 0.1); /* Subtle inset shadow */
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+  margin-bottom: 30px;
+  padding: 15px; /* Increased inner padding */
+}
+
+.card:hover {
+  border-color: #007bff;
+  transform: scale(1.015);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+  transition: box-shadow 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border-color: var(--button-background-color);
+  border-radius: 50px; /* Rounded buttons to resemble control knobs */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+/* Forms */
+.form-control {
+  background-color: var(--form-background-color);
+  color: var(--form-text-color);
+  border: 0.5px solid var(--border-color); /* Rugged form borders */
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+
+input[type="text"] {
+  background-color: var(--form-background-color);
+  color: var(--form-text-color);
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  width: 100%;
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+
+input[type="text"]::placeholder {
+  color: var(--form-text-color);
+}
+
+.dark-mode input[type="text"] {
+  background-color: var(--form-background-color);
+  color: var(--form-text-color);
+  border: 1px solid var(--border-color);
+}
+
+.dark-mode input[type="text"]::placeholder {
+  color: var(--form-text-color);
+}
+
+/* Analog Switch for Light/Dark Mode (Placeholder styles) */
+.analog-switch {
+  position: relative;
+  width: 80px;
+  height: 40px;
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
+  background-color: var(--background-color);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  transition: background-color 0.6s ease, border-color 0.6s ease;
+}
+
+.switch-knob {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: var(--button-background-color);
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.analog-switch.dark .switch-knob {
+  left: 5px; /* Light mode */
+}
+
+.analog-switch .switch-knob {
+  right: 5px; /* Dark mode */
+}
+
+.switch-label {
+  font-size: 12px;
+  color: var(--text-color);
+  transition: color 0.6s ease;
 }
