@@ -5,6 +5,7 @@ import { REMOVE_STATION } from '../utils/mutations';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { removeStationId } from '../utils/localStorage';
+import { generateSVGPlaceholder } from '../utils/SVG';
 
 const SavedStations = () => {
   // Apollo Client's useQuery to get user data
@@ -92,11 +93,16 @@ const SavedStations = () => {
             : 'You have no saved stations!'}
         </h2>
         <Row>
-          {userData.savedStations.map((station) => {
-            return (
+          {userData.savedStations.map((station) => (
               <Col key={station.stationId} md="4">
                 <Card border='dark'>
-                  <a href={station.url}>{station.image ? <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> : null}</a>
+                  <a href={station.url}>
+                    {station.image ? (
+                      <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> 
+                    ) : (
+                      <img src={generateSVGPlaceholder(station.name, 'a71313')} alt={`Placeholder Image for ${station.name}`} className="card-img-top" style={{ width: '100%', height: 'auto' }} />
+                    )}
+                  </a>
                   <Card.Body>
                     <Card.Title>{station.name}</Card.Title>
                     <p className='small'>Homepage: {station.homepage}</p>
@@ -109,8 +115,7 @@ const SavedStations = () => {
                   </Card.Body>
                 </Card>
               </Col>
-            );
-          })}
+            ))}
         </Row>
       </Container>
     </>
