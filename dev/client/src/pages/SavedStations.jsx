@@ -1,18 +1,12 @@
 import React from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_STATION } from '../utils/mutations';
-import {
-  Container,
-  Card,
-  Button,
-  Row,
-  Col
-} from 'react-bootstrap';
-
-
+import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { removeStationId } from '../utils/localStorage';
+import { generateSVGPlaceholder } from '../utils/SVG';
 
 const SavedStations = () => {
   // Apollo Client's useQuery to get user data
@@ -24,6 +18,9 @@ const SavedStations = () => {
     },
     skip: !Auth.loggedIn(),
   });
+
+  // Get dark mode from context
+  const { isDarkMode } = useOutletContext(); 
 
   // Rename the data from the query for clarity
   const userData = data?.me || {};
@@ -86,13 +83,11 @@ const SavedStations = () => {
     return <h2>Something went wrong!</h2>;
   }
 
-  
-
   return (
     <>
-      <div fluid className="text-light bg-dark p-5">
-        <Container>
-          <h1>Viewing saved Radio Stations!</h1>
+      <div className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
+        <Container fluid>
+          <h1>Your Radio Stations!</h1>
         </Container>
       </div>
       <Container>
@@ -102,11 +97,16 @@ const SavedStations = () => {
             : 'You have no saved stations!'}
         </h2>
         <Row>
-          {userData.savedStations.map((station) => {
-            return (
-              <Col md="4">
-                <Card key={station.stationId} border='dark'>
-                  <a href={station.url}>{station.image ? <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> : null}</a>
+          {userData.savedStations.map((station) => (
+              <Col key={station.stationId} md="4">
+                <Card className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} border-dark`}>
+                  <a href={station.url}>
+                    {station.image ? (
+                      <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> 
+                    ) : (
+                      <img src={generateSVGPlaceholder(station.name, 'a71313')} alt={`Placeholder Image for ${station.name}`} className="card-img-top" style={{ width: '100%', height: 'auto' }} />
+                    )}
+                  </a>
                   <Card.Body>
                     <Card.Title>{station.name}</Card.Title>
                     <a href={station.homepage}>
@@ -121,8 +121,7 @@ const SavedStations = () => {
                   </Card.Body>
                 </Card>
               </Col>
-            );
-          })}
+            ))}
         </Row>
       </Container>
     </>

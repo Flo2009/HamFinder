@@ -39,6 +39,7 @@ export const SAVE_STATION = gql`
         image
         url
         homepage
+        color
       }
     }
   }

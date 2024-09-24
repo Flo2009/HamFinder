@@ -1,43 +1,54 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import { Navbar, Nav, Container, Modal, Tab, Button } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-
 import Auth from '../utils/auth';
 
-const AppNavbar = () => {
+const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <Navbar className={`navbar $isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
+      <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-            Google Stations Search
+            HamFinder
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
               <Nav.Link as={Link} to='/'>
-                Search For Radio Stations
+                About
               </Nav.Link>
               {/* if user is logged in show saved stations and logout */}
               {Auth.loggedIn() ? (
                 <>
+                  <Nav.Link as={Link} to='/'>
+                    Donate
+                  </Nav.Link>
                   <Nav.Link as={Link} to='/saved'>
-                    See Your Stations
+                    My Ham
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
               )}
+              {/* Dark Mode Toggle Button */}
+              <div
+                className={`analog-switch ${isDarkMode ? 'dark' : ''}`}
+                onClick={() => setIsDarkMode(!isDarkMode)}
+              >
+                <span className="switch-knob"></span>
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
       {/* set modal data up */}
       <Modal
         size='lg'

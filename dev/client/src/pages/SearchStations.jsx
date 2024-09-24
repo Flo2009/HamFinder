@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SAVE_STATION } from '../utils/mutations';
 import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
@@ -23,8 +24,8 @@ const SearchStations = () => {
 
   const [saveStation] = useMutation(SAVE_STATION);
 
-  // Create a dark mode state
-  const [isDarkMode, setIsDarkMode] = useState(false); // <-- Dark mode state
+  // Get dark mode from context
+  const { isDarkMode } = useOutletContext(); 
 
   useEffect(() => {
     return () => saveStationIds(savedStationIds);
@@ -76,23 +77,25 @@ const SearchStations = () => {
     }
   };
 
-  // create function to handle saving a station to our database
-  const handleSaveStation = async (stationId) => {
-    // console.log(stationId);
+  // Add the handleToggleFavorite function inside your SearchStations component
 
-    // find the book in `searchedBooks` state by the matching id
-    const stationToSave = searchedStations.find((station) => station.stationId === stationId);
-    
-    // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+const handleToggleFavorite = async (stationId) => {
+  const isFavorite = savedStationIds.includes(stationId);
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    if (!token) {
-      return false;
-    }
+  if (!token) {
+    return false;
+  }
 
-    try {
-      // Call the SAVE_STATION mutation
-       const { data } = await saveStation({
+  try {
+    if (isFavorite) {
+      // Logic to remove station if it's a favorite
+      setSavedStationIds(savedStationIds.filter((id) => id !== stationId));
+    } else {
+      // Logic to save the station if it's not a favorite
+      const stationToSave = searchedStations.find((station) => station.stationId === stationId);
+
+      const { data } = await saveStation({
         variables: { stationData: stationToSave },
         context: {
           headers: {
@@ -105,98 +108,97 @@ const SearchStations = () => {
         throw new Error('Something went wrong!');
       }
 
-      // if sation successfully saves to user's account, save station id to state
+      // if station successfully saves to user's account, save station id to state
       setSavedStationIds([...savedStationIds, stationToSave.stationId]);
-    } catch (err) {
-      console.error(err);
     }
-  };
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
-    <>
-      {/* Toggle Dark Mode Button */}
-      <div className="p-3">
-        <Button onClick={() => setIsDarkMode(!isDarkMode)} variant="secondary">
-          {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-        </Button>
-      </div>
-
+    <>      
       {/* Main Search Section */}
-      <div className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
+      <div className="main-content">
+        <div id="searchFormSection" className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
+          <Container>
+            {/* {error && (
+              <Alert variant="danger" onClose={() => setError(null)} dismissible>
+                {error}
+              </Alert>
+            )} */}
+            <h1>Search for Radio Stations!</h1>
+            <Form onSubmit={handleFormSubmit}>
+              <Row>
+                <Col xs={12} md={8}>
+                  <Form.Control
+                    name='searchInput'
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    type='text'
+                    size='lg'
+                    placeholder='Search for Radio Stations'
+                  />
+                </Col>
+                <Col xs={12} md={4}>
+                  <Button type='submit' variant='success' size='lg'>
+                    Submit Search
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Container>
+        </div>
+
         <Container>
-          {/* {error && (
-            <Alert variant="danger" onClose={() => setError(null)} dismissible>
-              {error}
-            </Alert>
-          )} */}
-          <h1>Search for Radio Stations!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for Radio Stations'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+          <h2 className='pt-5'>
+            {searchedStations.length
+              ? `Viewing ${searchedStations.length} results:`
+              : ''}
+          </h2>
+          <Row className="gy-4">
+            {searchedStations.map((station) => {
+              const isFavorite = savedStationIds.includes(station.stationId);
+
+              return (
+                <Col md="4" key={station.stationId}>
+                
+                    <Card border='dark'>
+                        <a href= {station.url}>
+                          {station.image ? (
+                            <Card.Img  src={station.image} alt={`The cover for ${station.name}`} variant='top' />
+                          ) : (  
+                            <Card.Img src={generateSVGPlaceholder(station.name, station.color)} alt={`Placeholder for ${station.name}`} variant='top' />
+                          )}
+                        </a>
+                        <Card.Body>
+                          <Card.Title>{station.name}</Card.Title>
+                          <a href= {station.homepage}>
+                            <Card.Text>Station Homepage</Card.Text>
+                          </a>
+                          <Card.Text>{station.country}</Card.Text>
+                          <Card.Text>Clicks:</Card.Text>
+                          <Card.Text>{station.clickcount}</Card.Text>
+                          {Auth.loggedIn() && (
+                            // Flick Switch and Indicator Light Wrapper
+                            <div className="flick-switch-wrapper">
+                              {/* Flick Switch */}
+                              <div className={`flick-switch ${isFavorite ? 'on' : ''}`} onClick={() => handleToggleFavorite(station.stationId)}>
+                                <div className="flick-knob"></div>
+                              </div>
+                              {/* Indicator Light */}
+                              <div className={`indicator-light ${isFavorite ? 'on' : ''}`}></div>
+                            </div>
+                          )}
+                        </Card.Body>
+                    </Card>
+                  
+                </Col>
+              );
+            })}
+          </Row>
         </Container>
       </div>
-
-      <Container>
-        <h2 className='pt-5'>
-          {searchedStations.length
-            ? `Viewing ${searchedStations.length} results:`
-            : ''}
-        </h2>
-        <Row>
-          {searchedStations.map((station) => {
-            return (
-              <Col md="4" key={station.stationId}>
-               
-                  <Card border='dark'>
-                      <a href= {station.url}>
-                        {station.image ? (
-                          <Card.Img  src={station.image} alt={`The cover for ${station.name}`} variant='top' />
-                        ) : (  
-                          <Card.Img src={generateSVGPlaceholder(station.name, station.color)} alt={`Placeholder for ${station.name}`} variant='top' />
-                        )}
-                      </a>
-                      <Card.Body>
-                        <Card.Title>{station.name}</Card.Title>
-                        <a href= {station.homepage}>
-                          <Card.Text>Station Homepage</Card.Text>
-                        </a>
-                        <Card.Text>{station.country}</Card.Text>
-                        <Card.Text>Clicks:</Card.Text>
-                        <Card.Text>{station.clickcount}</Card.Text>
-                        {Auth.loggedIn() && (
-                          <Button
-                            disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
-                            className='btn-block btn-info'
-                            onClick={() => handleSaveStation(station.stationId)}>
-                            {savedStationIds?.some((savedStationId) => savedStationId === station.stationId)
-                              ? 'This station has already been saved!'
-                              : 'Save this Station!'}
-                          </Button>
-                        )}
-                      </Card.Body>
-                  </Card>
-                
-              </Col>
-            );
-          })}
-        </Row>
-      </Container>
     </>
   );
 };
