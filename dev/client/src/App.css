@@ -86,6 +86,12 @@ h1 {
   transition: color 0.3s ease;
 }
 
+.my-custom-navbar a:focus,
+.my-custom-navbar a:active {
+  color: var(--text-color); /* Ensure text color remains correct */
+  outline: none; /* Remove outline if it's not desired */
+}
+
 .my-custom-navbar a:hover {
   color: var(--hover-color);
   transform: scale(1.03); /* Slightly enlarge on hover */

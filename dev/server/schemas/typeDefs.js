@@ -18,6 +18,7 @@ const typeDefs = `
     url: String
     homepage: String
     color: String
+    isFavorite: Boolean
   }
 
   type Auth {
