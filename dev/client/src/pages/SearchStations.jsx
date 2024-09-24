@@ -158,7 +158,7 @@ const SearchStations = () => {
             ? `Viewing ${searchedStations.length} results:`
             : ''}
         </h2>
-        <Row>
+        <Row className="gy-4">
           {searchedStations.map((station) => {
             return (
               <Col md="4" key={station.stationId}>

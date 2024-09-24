@@ -7,8 +7,6 @@ export const generateSVGPlaceholder = (text, color) => {
       .toUpperCase()
       .slice(0, 2); // Get first two initials
   
-    // Function to handle UTF-8 encoding for btoa
-    // const toBase64 = (str) => window.btoa(unescape(encodeURIComponent(str)));
     // Use modern encoding method
     const toBase64 = (str) => window.btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode('0x' + p1)));
   

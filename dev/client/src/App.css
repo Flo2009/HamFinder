@@ -59,17 +59,19 @@ h1, h2, h3, h4, h5, h6 {
 /* Top Station Cards */
 .station-card {
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin: 10px;
+  
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .station-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 /* Saved and Search Stations Pages */
