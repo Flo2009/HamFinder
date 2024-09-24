@@ -171,7 +171,7 @@ const SearchStations = () => {
                     onChange={(e) => setSearchInput(e.target.value)}
                     type='text'
                     size='lg'
-                    placeholder='Search for Radio Stations'
+                    placeholder='Rock, Blues, Soul, Rap, etc.'
                     className="custom-search-bar"
                   />
                   </div>

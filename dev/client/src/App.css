@@ -5,7 +5,7 @@
   --navbar-background-color: #d9d9d9; /* Softer metal-like background */
   --card-background-color: #eaeaea; /* Metallic light gray */
   --form-background-color: #e0e0e0; /* Metallic light gray for form */
-  --form-text-color: #333333;
+  --form-text-color: #999;
   --button-background-color: #007bff;
   --button-text-color: #333333;
   --border-color: #999; /* More metallic border */
@@ -127,6 +127,12 @@ h1 {
 .hamfinder-custom:hover {
   cursor: pointer;
   transform: scale(1.03);
+}
+
+/* search bar */
+
+.custom-search-bar {
+  color: var(--form-text-color)
 }
 
 /* Cards */
