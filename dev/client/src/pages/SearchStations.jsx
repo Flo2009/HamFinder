@@ -120,7 +120,7 @@ const SearchStations = () => {
           {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         </Button>
       </div>
-
+      
       {/* Main Search Section */}
       <div className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
         <Container>

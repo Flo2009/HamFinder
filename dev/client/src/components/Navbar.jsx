@@ -12,7 +12,7 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar className={`navbar $isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
+      <Navbar className={`navbar my-custom-navbar $isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
             HamFinder
@@ -21,13 +21,16 @@ const AppNavbar = () => {
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
               <Nav.Link as={Link} to='/'>
-                Search For Radio Stations
+                About
               </Nav.Link>
               {/* if user is logged in show saved stations and logout */}
               {Auth.loggedIn() ? (
                 <>
+                  <Nav.Link as={Link} to='/'>
+                    Donate
+                  </Nav.Link>
                   <Nav.Link as={Link} to='/saved'>
-                    See Your Stations
+                    My Ham
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
