@@ -84,7 +84,6 @@ h1 {
   transform: scale(1.03); /* Slightly enlarge on hover */
 }
 
-
 /* Navbar */
 .navbar {
   background-color: var(--navbar-background-color) !important;

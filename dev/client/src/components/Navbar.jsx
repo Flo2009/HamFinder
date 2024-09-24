@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab, Button } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
@@ -10,10 +10,14 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
-const handleHomeClick = (event) => {
-  event.preventDefault();  // Prevent default link behavior
-  window.location.reload(); // Force page refresh
-};
+  // Inside your component
+  const navigate = useNavigate();
+
+  const handleHomeClick = (event) => {
+    event.preventDefault();
+    navigate('/');  // Navigate to the home page
+    window.location.reload(); // Force page refresh
+  };
 
   return (
     <>
