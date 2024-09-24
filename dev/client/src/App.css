@@ -113,6 +113,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Dark Mode */
+.dark-mode {
+  background-color: #333;
+  color: white;
+}
+
+.bg-dark {
+  background-color: #333;
+}
+
+.bg-light {
+  background-color: white;
+}
+
 body.dark-mode {
   background-color: #1D1D1D;
   color: #E0E0E0;
