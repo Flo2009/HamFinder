@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SAVE_STATION } from '../utils/mutations';
 import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
@@ -23,8 +24,8 @@ const SearchStations = () => {
 
   const [saveStation] = useMutation(SAVE_STATION);
 
-  // Create a dark mode state
-  const [isDarkMode, setIsDarkMode] = useState(false); // <-- Dark mode state
+  // Get dark mode from context
+  const { isDarkMode } = useOutletContext || {}; // Safely destructure, fallback to empty object if context is null
 
   useEffect(() => {
     return () => saveStationIds(savedStationIds);
@@ -113,14 +114,7 @@ const SearchStations = () => {
   };
 
   return (
-    <>
-      {/* Toggle Dark Mode Button */}
-      <div className="p-3">
-        <Button onClick={() => setIsDarkMode(!isDarkMode)} variant="secondary">
-          {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-        </Button>
-      </div>
-      
+    <>      
       {/* Main Search Section */}
       <div className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
         <Container>

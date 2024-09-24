@@ -1,18 +1,18 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import { Navbar, Nav, Container, Modal, Tab, Button } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-
 import Auth from '../utils/auth';
 
-const AppNavbar = () => {
+const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <Navbar className={`navbar my-custom-navbar $isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
+      <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
             HamFinder
@@ -37,10 +37,18 @@ const AppNavbar = () => {
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
               )}
+              {/* Dark Mode Toggle Button */}
+              <Button
+                variant='secondary'
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className='ml-3'>
+                {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
       {/* set modal data up */}
       <Modal
         size='lg'

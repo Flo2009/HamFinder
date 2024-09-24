@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
@@ -29,11 +30,17 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // Define dark mode state in App component
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   return (
     <ApolloProvider client={client}>
       <>
-        <Navbar />
-        <Outlet />
+        {/* Pass dark mode state to Navbar */}
+        <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+        
+        {/* Pass dark mode context via Outlet */}
+        <Outlet context={{ isDarkMode, setIsDarkMode }} />
       </>
     </ApolloProvider>
   );
