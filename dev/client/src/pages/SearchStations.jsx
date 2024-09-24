@@ -163,7 +163,8 @@ const SearchStations = () => {
             <h1>Search for Radio Stations!</h1>
             <Form onSubmit={handleFormSubmit}>
               <Row>
-                <Col xs={12} md={8}>
+                <Col xs={12} md={11}>
+                  <div className="search-bar-container">
                   <Form.Control
                     name='searchInput'
                     value={searchInput}
@@ -171,11 +172,13 @@ const SearchStations = () => {
                     type='text'
                     size='lg'
                     placeholder='Search for Radio Stations'
+                    className="custom-search-bar"
                   />
+                  </div>
                 </Col>
-                <Col xs={12} md={4}>
-                  <Button type='submit' variant='success' size='lg'>
-                    Submit Search
+                <Col xs={12} md={1}>
+                  <Button className='custom-submit-btn' type='submit' variant='success' size='lg'>
+                    Go
                   </Button>
                 </Col>
               </Row>

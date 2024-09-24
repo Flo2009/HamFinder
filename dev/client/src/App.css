@@ -7,7 +7,7 @@
   --form-background-color: #e0e0e0; /* Metallic light gray for form */
   --form-text-color: #333333;
   --button-background-color: #007bff;
-  --button-text-color: #ffffff;
+  --button-text-color: #333333;
   --border-color: #999; /* More metallic border */
   --heading-color: #333333; /* Darker heading text */
   --hover-color: #000000; /* Hover color for light mode */
@@ -58,6 +58,7 @@ h1 {
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 
+/* body */
 
 /* Navbar */
 .navbar {
@@ -111,28 +112,21 @@ h1 {
   color: #007bff;
   letter-spacing: 2px;
   cursor: pointer;
-  /* Add any other custom styles here */
 }
 
 .hamfinder-ham {
-  color: #f179b5; /* Pinkish color */
+  color: #f179b5;
   font-weight: bold;
 }
 
 .hamfinder-finder {
-  color: var(--heading-color); /* Blue color or any other you prefer */
+  color: var(--heading-color);
   font-weight: bold;
 }
 
-/* Optional: Add additional styles for hover effects */
 .hamfinder-custom:hover {
   cursor: pointer;
-  transform: scale(1.03); /* Slightly enlarge on hover */
-}
-
-#searchFormSection {
-  background-color: var(--background-color);
-  transition: background-color 0.6s ease, color 0.6s ease;
+  transform: scale(1.03);
 }
 
 /* Cards */
@@ -169,6 +163,29 @@ button:hover {
   background-color: #0056b3;
   border-color: #0056b3;
   transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+.custom-submit-btn {
+  background-color: #C3DDD6;
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  height: 100%; /* Ensure it matches the height of the input */
+}
+
+.custom-submit-btn:hover {
+  background-color: #80C2B0;
+  color: var(--button-text-color);
+  transform: scale(1.05);
+}
+
+.custom-submit-btn:active {
+  background-color: #397d3d; /* Even darker green when active */
+  transform: scale(0.95); /* Shrink effect when clicked */
 }
 
 /* flick switch for favorites */
@@ -332,4 +349,10 @@ input[type="text"]::placeholder {
 /* Hide the label when the knob covers it */
 .switch-label {
   display: none; /* Hide the label, since you want only the switch */
+}
+
+/* specific sections target */
+#searchFormSection {
+  background-color: var(--background-color);
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
