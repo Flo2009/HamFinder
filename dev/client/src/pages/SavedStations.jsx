@@ -1,4 +1,5 @@
 import React from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_STATION } from '../utils/mutations';
@@ -17,6 +18,9 @@ const SavedStations = () => {
     },
     skip: !Auth.loggedIn(),
   });
+
+  // Get dark mode from context
+  const { isDarkMode } = useOutletContext(); 
 
   // Rename the data from the query for clarity
   const userData = data?.me || {};
@@ -81,7 +85,7 @@ const SavedStations = () => {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
         <Container fluid>
           <h1>Your Radio Stations!</h1>
         </Container>
@@ -95,7 +99,7 @@ const SavedStations = () => {
         <Row>
           {userData.savedStations.map((station) => (
               <Col key={station.stationId} md="4">
-                <Card border='dark'>
+                <Card className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} border-dark`}>
                   <a href={station.url}>
                     {station.image ? (
                       <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> 
