@@ -117,7 +117,7 @@ const SearchStations = () => {
     <>      
       {/* Main Search Section */}
       <div className="main-content">
-        <div className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
+        <div id="searchFormSection" className={`text-light ${isDarkMode ? 'bg-dark' : 'bg-light'} p-5`}>
           <Container>
             {/* {error && (
               <Alert variant="danger" onClose={() => setError(null)} dismissible>
