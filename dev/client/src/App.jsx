@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import './App.css';
+import { useState, useEffect} from 'react';
 import { Outlet } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
 import Navbar from './components/Navbar';
@@ -32,6 +31,15 @@ const client = new ApolloClient({
 function App() {
   // Define dark mode state in App component
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+    // Effect to add/remove dark mode class to the body element
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
 
   return (
     <ApolloProvider client={client}>
