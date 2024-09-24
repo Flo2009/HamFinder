@@ -109,7 +109,9 @@ const SavedStations = () => {
                   <a href={station.url}>{station.image ? <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> : null}</a>
                   <Card.Body>
                     <Card.Title>{station.name}</Card.Title>
-                    <p className='small'>Homepage: {station.homepage}</p>
+                    <a href={station.homepage}>
+                      <p className='small'>Homepage: {station.homepage}</p>
+                    </a>
                     <Card.Text>{station.country}</Card.Text>
                     <Card.Text>Clicks:</Card.Text>
                     <Card.Text>{station.clickcount}</Card.Text>
