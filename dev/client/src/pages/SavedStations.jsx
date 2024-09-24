@@ -78,13 +78,11 @@ const SavedStations = () => {
     return <h2>Something went wrong!</h2>;
   }
 
-  
-
   return (
     <>
-      <div fluid className="text-light bg-dark p-5">
-        <Container>
-          <h1>Viewing saved Radio Stations!</h1>
+      <div className="text-light bg-dark p-5">
+        <Container fluid>
+          <h1>Your Radio Stations!</h1>
         </Container>
       </div>
       <Container>
@@ -96,8 +94,8 @@ const SavedStations = () => {
         <Row>
           {userData.savedStations.map((station) => {
             return (
-              <Col md="4">
-                <Card key={station.stationId} border='dark'>
+              <Col key={station.stationId} md="4">
+                <Card border='dark'>
                   <a href={station.url}>{station.image ? <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' /> : null}</a>
                   <Card.Body>
                     <Card.Title>{station.name}</Card.Title>
