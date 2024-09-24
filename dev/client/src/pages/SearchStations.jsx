@@ -77,23 +77,25 @@ const SearchStations = () => {
     }
   };
 
-  // create function to handle saving a station to our database
-  const handleSaveStation = async (stationId) => {
-    // console.log(stationId);
+  // Add the handleToggleFavorite function inside your SearchStations component
 
-    // find the book in `searchedBooks` state by the matching id
-    const stationToSave = searchedStations.find((station) => station.stationId === stationId);
-    
-    // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+const handleToggleFavorite = async (stationId) => {
+  const isFavorite = savedStationIds.includes(stationId);
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    if (!token) {
-      return false;
-    }
+  if (!token) {
+    return false;
+  }
 
-    try {
-      // Call the SAVE_STATION mutation
-       const { data } = await saveStation({
+  try {
+    if (isFavorite) {
+      // Logic to remove station if it's a favorite
+      setSavedStationIds(savedStationIds.filter((id) => id !== stationId));
+    } else {
+      // Logic to save the station if it's not a favorite
+      const stationToSave = searchedStations.find((station) => station.stationId === stationId);
+
+      const { data } = await saveStation({
         variables: { stationData: stationToSave },
         context: {
           headers: {
@@ -106,12 +108,13 @@ const SearchStations = () => {
         throw new Error('Something went wrong!');
       }
 
-      // if sation successfully saves to user's account, save station id to state
+      // if station successfully saves to user's account, save station id to state
       setSavedStationIds([...savedStationIds, stationToSave.stationId]);
-    } catch (err) {
-      console.error(err);
     }
-  };
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <>      
@@ -155,6 +158,8 @@ const SearchStations = () => {
           </h2>
           <Row className="gy-4">
             {searchedStations.map((station) => {
+              const isFavorite = savedStationIds.includes(station.stationId);
+
               return (
                 <Col md="4" key={station.stationId}>
                 
@@ -175,14 +180,15 @@ const SearchStations = () => {
                           <Card.Text>Clicks:</Card.Text>
                           <Card.Text>{station.clickcount}</Card.Text>
                           {Auth.loggedIn() && (
-                            <Button
-                              disabled={savedStationIds?.some((savedStationId) => savedStationId === station.stationId)}
-                              className='btn-block btn-info'
-                              onClick={() => handleSaveStation(station.stationId)}>
-                              {savedStationIds?.some((savedStationId) => savedStationId === station.stationId)
-                                ? 'This station has already been saved!'
-                                : 'Save this Station!'}
-                            </Button>
+                            // Flick Switch and Indicator Light Wrapper
+                            <div className="flick-switch-wrapper">
+                              {/* Flick Switch */}
+                              <div className={`flick-switch ${isFavorite ? 'on' : ''}`} onClick={() => handleToggleFavorite(station.stationId)}>
+                                <div className="flick-knob"></div>
+                              </div>
+                              {/* Indicator Light */}
+                              <div className={`indicator-light ${isFavorite ? 'on' : ''}`}></div>
+                            </div>
                           )}
                         </Card.Body>
                     </Card>
