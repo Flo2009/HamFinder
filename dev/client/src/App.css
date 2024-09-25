@@ -101,6 +101,7 @@ h1 {
 
 /* logo */
 #hamfinder-logo {
+  position: relative;
   top: -4px !important; /* Move the logo up */
   margin-right: 3px !important;
 }
