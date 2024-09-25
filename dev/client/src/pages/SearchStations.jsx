@@ -66,7 +66,7 @@ const SearchStations = () => {
 
       const stationData = response.map((station) => ({
         stationId: station.stationuuid,
-        name: station.name,
+        name: station.name.substring(0, 20),
         country: station.country,
         image: station.favicon || '',
         url: station.url_resolved,
