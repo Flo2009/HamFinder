@@ -25,7 +25,7 @@ const SearchStations = () => {
   // mutations
   const [saveStation] = useMutation(SAVE_STATION);
   const [removeStation] = useMutation(REMOVE_STATION);
-
+  const [language, setLanguage] = useState('');
 
   // Get dark mode from context
   const { isDarkMode } = useOutletContext(); 
@@ -55,8 +55,8 @@ const SearchStations = () => {
     try {
       const query = searchInput.toLowerCase();
 
-      console.log("Querying:", query); // <-- Log the query input
-      const response = await searchRadioStations(query);
+      console.log("Querying:", query,); // <-- Log the query input
+      const response = await searchRadioStations(query, language);
       console.log("API Response:", response); // <-- Log the API response
       
       if (!response || response.length === 0) {
@@ -153,6 +153,9 @@ const SearchStations = () => {
     console.error(err);
   }
 };
+const handleLanguage =(language) => {
+  setLanguage(language)
+}
 
   return (
     <>      
@@ -172,9 +175,20 @@ const SearchStations = () => {
                     type='text'
                     size='lg'
                     placeholder='Rock, Blues, Soul, Rap, etc.'
-                    className="custom-search-bar"
-                  />
+                    className="custom-search-bar"/>
+                  
                   </div>
+                  <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select Country
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <button class="dropdown-item" type="button"onClick={() =>handleLanguage("US")}>US</button>
+                  <button class="dropdown-item" type="button"onClick={() => handleLanguage("DE")}>Germany</button>
+                  <button class="dropdown-item" type="button"onClick={() => handleLanguage("FR")}>Franch</button>
+                </div>
+              
+              </div>
                 </Col>
                 <Col xs={12} md={1}>
                   <Button className='custom-submit-btn' type='submit' variant='success' size='lg'>
