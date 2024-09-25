@@ -1,11 +1,12 @@
-export const searchRadioStations = async (query) => {
+export const searchRadioStations = async (query, language) => {
   const baseURL = 'https://de1.api.radio-browser.info/json/stations/search';
   
   // Define filter as an object
   let filter = {
     name: query,
     limit: 6,         // Limit results
-    tag: query,       // Search by tag
+    tag: query, 
+    countrycode: language, //search by country      
   };
 
   // Construct the URL with query parameters using URLSearchParams
