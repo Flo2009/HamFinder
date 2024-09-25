@@ -17,14 +17,30 @@ const SavedStations = () => {
       },
     },
     skip: !Auth.loggedIn(),
+    
   });
-
+  
   // Get dark mode from context
   const { isDarkMode } = useOutletContext(); 
 
   // Rename the data from the query for clarity
-  const userData = data?.me || {};
+  let userData = data?.me || {};
+  console.log(userData.savedStations);
+  let stations = userData.savedStations;
 
+  const obj={};
+
+  for (let i = 0, len = stations.length; i < len; i++){
+    obj[stations[i]['stationId']] = stations[i];
+  }
+  stations = new Array();
+
+    for (const key in obj){
+      stations.push(obj[key]);
+    }
+
+    console.log(stations);
+    // userData = stations;
   // Mutation to remove a station
   const [removeStation] = useMutation(REMOVE_STATION, {
     context: {
@@ -92,12 +108,12 @@ const SavedStations = () => {
       </div>
       <Container>
         <h2 className='pt-5'>
-          {userData.savedStations.length
-            ? `Viewing ${userData.savedStations.length} saved ${userData.savedStations.length === 1 ? 'station' : 'stations'}:`
+          {stations.length
+            ? `Viewing ${stations.length} saved ${stations.length === 1 ? 'station' : 'stations'}:`
             : 'You have no saved stations!'}
         </h2>
         <Row>
-          {userData.savedStations.map((station) => (
+          {stations.map((station) => (
               <Col key={station.stationId} md="4">
                 <Card className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} border-dark`}>
                   <a href={station.url}>

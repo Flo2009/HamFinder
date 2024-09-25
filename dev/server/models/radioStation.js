@@ -10,6 +10,7 @@ const stationSchema = new Schema({
   stationId: {
     type: String,
     required: true,
+    // unique: true,
   },
   image: {
     type: String,
