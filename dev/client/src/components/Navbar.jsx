@@ -24,15 +24,14 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     <>
       <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Nav></Nav>
         <Navbar.Brand 
           className="hamfinder-custom" // Add inline styles
           onClick={handleHomeClick} // Trigger page refresh
         >
           {/* Add the logo image */}
-          <img 
-            src={logo} 
-            alt="HamFinder Logo" 
+          <img
+            src={logo}
+            alt="HamFinder Logo"
             style={{ width: '40px', height: '40px', marginRight: '10px' }}
             id="hamfinder-logo"
           />
