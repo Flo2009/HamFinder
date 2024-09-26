@@ -81,12 +81,13 @@ h1 {
 }
 
 .my-custom-navbar a {
-  color: var(--text-color);
+  color: var(--text-color) !important;
   text-decoration: none;
   margin: 0 15px;
   font-weight: 500;
   transition: color 0.3s ease;
 }
+
 .my-custom-navbar a:focus,
 .my-custom-navbar a:active {
   color: var(--text-color); /* Ensure text color remains correct */
@@ -94,9 +95,12 @@ h1 {
 }
 
 .my-custom-navbar a:hover {
-  color: var(--hover-color);
-
+  color: var(--hover-color) !important;
   transform: scale(1.03); /* Slightly enlarge on hover */
+}
+
+.dark-mode .my-custom-navbar a {
+  color: var(--text-color) !important; /* White in dark mode */
 }
 
 /* logo */
