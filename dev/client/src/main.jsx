@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import SearchStations from './pages/SearchStations.jsx'
 import SavedStations from './pages/SavedStations.jsx'
+import AboutUs from './components/AboutUs.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,9 @@ const router = createBrowserRouter([
       }, {
         path: '/saved',
         element: <SavedStations />
+      },{
+        path: '/aboutus',
+        element: < AboutUs />
       }
     ]
   }

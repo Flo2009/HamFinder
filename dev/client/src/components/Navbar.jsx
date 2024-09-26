@@ -40,13 +40,13 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/'>
+              <Nav.Link as={Link} to='/aboutus'>
                 About
               </Nav.Link>
               {/* if user is logged in show saved stations and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/'>
+                  <Nav.Link as={Link} to='https://donate.stripe.com/test_8wM6so2Ix2jc8Qo3cc'>
                     Donate
                   </Nav.Link>
                   <Nav.Link as={Link} to='/saved'>
