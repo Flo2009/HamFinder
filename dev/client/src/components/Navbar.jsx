@@ -24,20 +24,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     window.location.reload(); // Force page refresh
   };
 
-  // const handleClick = (event) => {
-  //   event.preventDefault();
-  //   if (!stripe || !elements){
-  //     return;
-  //   }
-
-  //   try {
-
-  //   }catch (err) {
-  //     console.log("An Error occurred during the creation of the checkout Sesssion", err);
-  //   }
-  // }
-
-  ///*onClick={handleClick}*/
+  
   return (
     <>
       <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>

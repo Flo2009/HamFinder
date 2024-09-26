@@ -59,7 +59,7 @@ const resolvers = {
       
       try {
         //find the user to update with the session user id
-        const updatedUser = await User.findByIdAndUpdate(context.user._id);//.populate('savedStations');
+        const updatedUser = await User.findByIdAndUpdate(context.user._id).populate('savedStations');
 
         // const updatedUser = await User.findByIdAndUpdate(
         //   context.user._id,
@@ -99,12 +99,13 @@ const resolvers = {
         await updatedUser.save();
         console.log(updatedUser);
 
-        const returnStationIds= updatedUser.savedStations;
-        console.log(savedStationIds);
-        let returnStations = await Station.find({ _id: { $in: returnStationIds } });
-          console.log(returnStations);
+        // const returnStationIds= updatedUser.savedStations;
+        // console.log(savedStationIds);
+        // let returnStations = await Station.find({ _id: { $in: returnStationIds } });
+        //   console.log(returnStations);
 
-        return returnStations;
+        const update = await User.findByIdAndUpdate(context.user._id).populate('savedStations');
+        return update;
     } catch (err){
       console.log(err);
       return { success: false, message: "An Error occurred while updating the stations"};
@@ -135,7 +136,7 @@ const resolvers = {
           context.user._id,
           { $pull: { savedStations: stationToRemove._id } }, // Remove the Station's ObjectId
           { new: true } // Return the updated user document
-        );  
+        ).populate('savedStations'); 
         return updatedUser;
       }catch(err){
         console.log(err);
