@@ -36,8 +36,8 @@ const AboutUs = () => {
 
       <div className="about-us-footer">
         <h3>Contact Us</h3>
-        <p>Email: info@ourcompany.com</p>
-        <p>Phone: (123) 456-7890</p>
+        <p>Email: info@radiohamfinder.com</p>
+        <p>Phone: (646) 456-7890</p>
       </div>
     </div>
   );
