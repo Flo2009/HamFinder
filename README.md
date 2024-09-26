@@ -145,6 +145,10 @@ Screen Shot:
 
 ![Screenshot 2024-09-25 at 8 50 39 PM](https://github.com/user-attachments/assets/06e6fa96-b712-4320-a7ef-2655bd55dd6d)
 
+Dark Mode
+![Screenshot 2024-09-25 at 8 51 59 PM](https://github.com/user-attachments/assets/81457c69-42ec-4c16-8b3f-64319bb3096b)
+
+
 ## License
 
 This project is licensed under the MIT License.
