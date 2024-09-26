@@ -153,7 +153,7 @@ SignUp
 
 ![Screenshot 2024-09-25 at 8 54 03 PM](https://github.com/user-attachments/assets/dcf1a4e5-bc1f-4be2-ac6a-e4b0e5ee9116)
 Saved Favourite Radio Station by user
-![Screenshot 2024-09-25 at 8 54 03 PM](https://github.com/user-attachments/assets/7be5c348-aec4-487b-beba-c9bd4f7303a6)
+![Screenshot 2024-09-25 at 9 01 46 PM](https://github.com/user-attachments/assets/b7b3d999-37d2-4ed2-8bdf-7ccb71ee9505)
 
 ## License
 
