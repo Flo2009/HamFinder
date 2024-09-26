@@ -143,6 +143,8 @@ Screen Shot:
 
 ![Screenshot 2024-09-25 at 8 49 20 PM](https://github.com/user-attachments/assets/913da1dd-e6cf-4158-a09e-ad9686836f61)
 
+![Screenshot 2024-09-25 at 8 50 39 PM](https://github.com/user-attachments/assets/06e6fa96-b712-4320-a7ef-2655bd55dd6d)
+
 ## License
 
 This project is licensed under the MIT License.
