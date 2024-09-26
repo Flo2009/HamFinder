@@ -24,6 +24,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     <>
       <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
+          <Nav>
         <Navbar.Brand 
           className="hamfinder-custom" // Add inline styles
           onClick={handleHomeClick} // Trigger page refresh
@@ -68,6 +69,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+     
 
       {/* set modal data up */}
       <Modal
