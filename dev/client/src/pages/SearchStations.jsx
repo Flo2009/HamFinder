@@ -166,7 +166,7 @@ const handleLanguage =(language) => {
             <h1>Search for Radio Stations!</h1>
             <Form onSubmit={handleFormSubmit}>
               <Row>
-                <Col xs={12} md={11}>
+                <Col xs={12} md={9}>
                   <div className="search-bar-container">
                     <Form.Control
                       name='searchInput'
@@ -177,16 +177,18 @@ const handleLanguage =(language) => {
                       placeholder='Rock, Blues, Soul, Rap, etc.'
                       className="custom-search-bar"/>
                   </div>
-                    <div className="dropdown">
-                      <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select Country
-                      </button>
-                      <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button className="dropdown-item" type="button"onClick={() =>handleLanguage("US")}>US</button>
-                        <button className="dropdown-item" type="button"onClick={() => handleLanguage("DE")}>Germany</button>
-                        <button className="dropdown-item" type="button"onClick={() => handleLanguage("FR")}>Franch</button>
-                      </div>
+                </Col>
+                <Col xs={20} md={2}>
+                  <div className="dropdown">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Select Country
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <button className="dropdown-item" type="button"onClick={() =>handleLanguage("US")}>US</button>
+                      <button className="dropdown-item" type="button"onClick={() => handleLanguage("DE")}>Germany</button>
+                      <button className="dropdown-item" type="button"onClick={() => handleLanguage("FR")}>Franch</button>
                     </div>
+                  </div>
                 </Col>
                 <Col xs={12} md={1}>
                   <Button className='custom-submit-btn' type='submit' variant='success' size='lg'>
