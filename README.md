@@ -44,10 +44,12 @@ As a radio listener, I want to search for new radio stations to listen to so tha
     - **THEN** I am logged out of the site and presented with a menu with the options "Search for Stations" and "Login/Signup" and an input field to search for stations and a submit button.
      **WHEN** I click on the toggle dark mode to light  
  - **THEN** the page changes it color to light
-  **WHEN** I navigated to a stripe page and able to make a payment/donate using debit/credit card 
+   **WHEN** I navigated to a stripe page and able to make a payment/donate using debit/credit card 
  - **THEN** I am able to see that the payment is made with a confirmation page displayinging information about the confirmed transaction.
    **WHEN** I make a payment/donate
  - **THEN**I am able to see a confirmation of the transaction made
+  **WHEN** 
+- **THEN**
 
 
 
@@ -93,12 +95,14 @@ Define the following types and mutations:
   - `removeStation`: Accepts stationId as a parameter; returns a `User` type.
 
 ### GraphQL Types
+
 - **User**:
   - `_id`, `username`, `email`, `stationCount`, `savedStations`
 - **Station**:
   - `stationId`, `name`, `frequency`, `genre`, `link`
 - **Auth**:
   - `token`, `user`
+
 
 ## Front-End Tasks
 
@@ -108,7 +112,7 @@ Define the following types and mutations:
 ### `mutations.js`
 - `LOGIN_USER`: Execute the login mutation.
 - `ADD_USER`: Execute the addUser mutation.
-- `SAVE_STATION`: Execute the saveStation mutation.
+- `SAVE_STATION`: Execute the  saveStation mutation.
 - `REMOVE_STATION`: Execute the removeStation mutation.
 
 ### `App.jsx`
