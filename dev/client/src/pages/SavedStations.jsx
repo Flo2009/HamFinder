@@ -25,25 +25,24 @@ const SavedStations = () => {
 
   // Rename the data from the query for clarity
   let userData = data?.me || {};
-  console.log(userData);
-  //  if (userData.length != 0){
-  //   console.log(userData);
-  //   let stations = userData.savedStations;
+  console.log(userData.savedStations);
+  
+  // let stations = userData.savedStations;
+  // console.log(Array.isArray(stations));
+  // console.log(stations.length);
+  // const obj={};
 
-  //   const obj={};
+  // for (let i = 0, len = stations.length; i < len; i++){
+  //   obj[stations[i]['stationId']] = stations[i];
+  // }
+  // stations = new Array();
 
-  //   for (let i = 0, len = stations.length; i < len; i++){
-  //     obj[stations[i]['stationId']] = stations[i];
+  //   for (const key in obj){
+  //     stations.push(obj[key]);
   //   }
-  //     stations = new Array();
 
-  //     for (const key in obj){
-  //       stations.push(obj[key]);
-  //     }
-
-  //     console.log(stations);
-      // userData.savedSations = stations;
-    // }
+  //   console.log(stations);
+    // userData = stations;
   // Mutation to remove a station
   const [removeStation] = useMutation(REMOVE_STATION, {
     context: {
@@ -111,12 +110,13 @@ const SavedStations = () => {
       </div>
       <Container>
         <h2 className='pt-5'>
-          {userData.savedStations.length
+
+          {userData.savedStations && userData.savedStations.length
             ? `Viewing ${userData.savedStations.length} saved ${userData.savedStations.length === 1 ? 'station' : 'stations'}:`
             : 'You have no saved stations!'}
         </h2>
         <Row>
-          {userData.savedStations.map((station) => (
+          {userData.savedStations && userData.savedStations.map((station) => (
               <Col key={station.stationId} md="4">
                 <Card className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} border-dark`}>
                   <a href={station.url}>

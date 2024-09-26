@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // import schema from Station.js
-const stationSchema = require('./RadioStation');
+const Station = require('./Station');
 
 const userSchema = new Schema(
   {
@@ -27,8 +27,11 @@ const userSchema = new Schema(
     donated: {
       type: Boolean,
     },
-    // set savedStations to be an array of data that adheres to the stationSchema
-    savedStations: [stationSchema],
+    // set savedStations to be an array of data that adheres to the stationSchema//Station.schema
+    savedStations: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Station', // Reference to Station model
+    }],
   },
   // set this to use virtual below
   {

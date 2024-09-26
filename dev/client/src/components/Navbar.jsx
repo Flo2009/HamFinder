@@ -6,6 +6,10 @@ import logo from '../assets/images/logo.png'
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 import Auth from '../utils/auth';
+import { loadStripe } from '@stripe/stripe-js';
+// import { Elements, useStripe, useElement, CardElement } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe('pk_test_8wM6so2Ix2jc8Qo3cc')
 
 const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
@@ -20,6 +24,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     window.location.reload(); // Force page refresh
   };
 
+  
   return (
     <>
       <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
