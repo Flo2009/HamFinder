@@ -95,13 +95,16 @@ const resolvers = {
           await station.save();
         }
         
-       
         updatedUser.savedStations.push(station._id)
-        
-        
         await updatedUser.save();
         console.log(updatedUser);
-        return updatedUser;
+
+        const returnStationIds= updatedUser.savedStations;
+        console.log(savedStationIds);
+        let returnStations = await Station.find({ _id: { $in: returnStationIds } });
+          console.log(returnStations);
+
+        return returnStations;
     } catch (err){
       console.log(err);
       return { success: false, message: "An Error occurred while updating the stations"};

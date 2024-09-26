@@ -17,7 +17,7 @@ const SearchStations = () => {
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
-  // create state to hold saved bookId values
+  // create state to hold saved stationId values
   const [savedStationIds, setSavedStationIds] = useState(getSavedStationIds());
   // State for handling errors
   const [error, setError] = useState(null); // <-- Add this line
@@ -134,7 +134,7 @@ const SearchStations = () => {
       if (!data) {
         throw new Error('Something went wrong!');
       }
-
+      console.log(data);
       // Update the savedStationIds in state and localStorage after saving
       const updatedSavedIds = [...savedStationIds, stationId];
       setSavedStationIds(updatedSavedIds);
