@@ -138,7 +138,8 @@ Define the following types and mutations:
 - Express.js
 - Authentication (JWT or similar)
 
-
+Screen Shot:
+![Screenshot 2024-09-25 at 8 47 42 PM](https://github.com/user-attachments/assets/f834da76-918c-4fe4-9070-72e7af8a3867)
 
 
 ## License
