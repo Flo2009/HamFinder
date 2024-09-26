@@ -141,6 +141,7 @@ Define the following types and mutations:
 Screen Shot:
 ![Screenshot 2024-09-25 at 8 47 42 PM](https://github.com/user-attachments/assets/f834da76-918c-4fe4-9070-72e7af8a3867)
 
+![Screenshot 2024-09-25 at 8 49 20 PM](https://github.com/user-attachments/assets/913da1dd-e6cf-4158-a09e-ad9686836f61)
 
 ## License
 
