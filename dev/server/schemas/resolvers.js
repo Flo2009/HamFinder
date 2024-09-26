@@ -58,7 +58,7 @@ const resolvers = {
       }
       
       try {
-
+        //find the user to update with the session user id
         const updatedUser = await User.findByIdAndUpdate(context.user._id);//.populate('savedStations');
 
         // const updatedUser = await User.findByIdAndUpdate(
@@ -66,30 +66,42 @@ const resolvers = {
         //   { $addToSet: { savedStations: stationData  } },
         //   { new: true, runValidators: true }
         // ).populate('savedStations');
-        console.log(updatedUser);
+        
         if (!updatedUser) {
+          console.log("No user found to update!")
           return { success: false, message: "User not found" };
         }
-
-        const stationExists = updatedUser.savedStations.some(
+        //get the user's Obeject Id's and query the Station Model
+        const savedStationIds= updatedUser.savedStations;
+        console.log(savedStationIds);
+        let currentStations = await Station.find({ _id: { $in: savedStationIds } });
+          console.log(currentStations);
+        
+        const stationExists = currentStations.some(
           (station) => station.stationId === stationData.stationId
         )
         console.log(stationExists) 
         if (stationExists) {
+          console.log('double');
           return { success: false, message: "Station is already saved" };
         };
         
+        // If the station doesn't exist, find or create the station
         let station = await Station.findOne({ stationId: stationData.stationId });
-        console.log(station);
+
         if (!station) {
+          // If the station is not found, create a new one
           station = new Station(stationData);
           await station.save();
         }
-
-        updatedUser.savedStations.push(stationData)
+        
+       
+        updatedUser.savedStations.push(station._id)
+        
+        
         await updatedUser.save();
         console.log(updatedUser);
-        return { success: true, message: "Station added successfully", updatedUser };
+        return updatedUser;
     } catch (err){
       console.log(err);
       return { success: false, message: "An Error occurred while updating the stations"};
@@ -100,13 +112,40 @@ const resolvers = {
       if (!context.user){
         throw new AuthenticationError('You need to log in!')
       };
-      const updatedUser = await User.findByIdAndUpdate(
-        context.user._id,
-        { $pull: { savedStations: { stationId } } },
-        { new: true }
-      ).populate('savedStations');
+
+      try {
+        const user = await User.findByIdAndUpdate(context.user._id);
+        if (!user) {
+          return { success: false, message: "User not found" };
+        }
+        const savedStationIds= user.savedStations;
+        console.log(savedStationIds);
+        let currentStations = await Station.find({ _id: { $in: savedStationIds } });
+          console.log(currentStations);
+        const stationToRemove = currentStations.find(station => station.stationId === stationId)
+        
+        if (!stationToRemove) {
+          console.log("No station to remove present!");
+          return { success: false, message: "Station not found in user's saved stations" };
+        }
+        const updatedUser = await User.findByIdAndUpdate(
+          context.user._id,
+          { $pull: { savedStations: stationToRemove._id } }, // Remove the Station's ObjectId
+          { new: true } // Return the updated user document
+        );  
+        return updatedUser;
+      }catch(err){
+        console.log(err);
+        return { success: false, message: "An Error occured during the process!"}
+      }
+
+    //   const updatedUser = await User.findByIdAndUpdate(
+    //     context.user._id,
+    //     { $pull: { savedStations:  stationId  } },
+    //     { new: true }
+    //   );
       
-      return updatedUser;
+    //   return updatedUser;
     },
 
     addDonation: async (parent, { donationAmount }, context) => {
