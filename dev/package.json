@@ -19,6 +19,8 @@
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.11.0",
+    "@stripe/react-stripe-js": "^2.8.0",
+    "@stripe/stripe-js": "^4.5.0",
     "apollo-server-express": "^3.13.0",
     "bcrypt": "^5.1.1",
     "express": "^4.21.0",
