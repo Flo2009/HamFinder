@@ -2,6 +2,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require ('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const { Station } = require('../models')
 const { signToken } = require ("../utils/auth")
 
 
@@ -12,7 +13,7 @@ const resolvers = {
       if (!context.user){
         throw new AuthenticationError("Please Log In!");
       }
-      const user = await User.findById(context.user._id);//.populate('savedStations')
+      const user = await User.findById(context.user._id).populate('savedStations')
       return user;
     },
     
@@ -55,22 +56,44 @@ const resolvers = {
       if (!context.user){
         throw new AuthenticationError('You need to log in!');
       }
-      //console.log(stationData.stationId);
+      
+      try {
 
-      const user = await User.findById(context.user._id);
+        const updatedUser = await User.findByIdAndUpdate(context.user._id);//.populate('savedStations');
 
-      const updatedUser = await User.findByIdAndUpdate(
-        context.user._id,
-        { $addToSet: { savedStations: stationData  } },
-        { new: true, runValidators: true }
-      ).populate('savedStations');
-
-        if (user.savedStations.includes(stationData.stationId)){
-          console.log("hello");
-          throw new Error ("Cannot accept duplicates");
-        } else {
-          return updatedUser;
+        // const updatedUser = await User.findByIdAndUpdate(
+        //   context.user._id,
+        //   { $addToSet: { savedStations: stationData  } },
+        //   { new: true, runValidators: true }
+        // ).populate('savedStations');
+        console.log(updatedUser);
+        if (!updatedUser) {
+          return { success: false, message: "User not found" };
         }
+
+        const stationExists = updatedUser.savedStations.some(
+          (station) => station.stationId === stationData.stationId
+        )
+        console.log(stationExists) 
+        if (stationExists) {
+          return { success: false, message: "Station is already saved" };
+        };
+        
+        let station = await Station.findOne({ stationId: stationData.stationId });
+        console.log(station);
+        if (!station) {
+          station = new Station(stationData);
+          await station.save();
+        }
+
+        updatedUser.savedStations.push(stationData)
+        await updatedUser.save();
+        console.log(updatedUser);
+        return { success: true, message: "Station added successfully", updatedUser };
+    } catch (err){
+      console.log(err);
+      return { success: false, message: "An Error occurred while updating the stations"};
+    }
     },
 
     removeStation: async (parent, { stationId }, context) => {
