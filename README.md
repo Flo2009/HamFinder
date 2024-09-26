@@ -147,6 +147,8 @@ Screen Shot:
 
 Dark Mode
 ![Screenshot 2024-09-25 at 8 51 59 PM](https://github.com/user-attachments/assets/81457c69-42ec-4c16-8b3f-64319bb3096b)
+Login
+![Screenshot 2024-09-25 at 8 53 46 PM](https://github.com/user-attachments/assets/dab178a0-f03f-4ea5-9f7b-03f304f8af7a)
 
 
 ## License
