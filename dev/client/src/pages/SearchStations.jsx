@@ -121,7 +121,7 @@ const SearchStations = () => {
       
       // Exclude `isFavorite` from `stationToSave` before sending it to the mutation
       const { isFavorite, color, ...stationDataToSave } = stationToSave;
-
+      console.log("My station:" , stationDataToSave.stationId);
       const { data } = await saveStation({
         variables: { stationData: stationDataToSave },
         context: {

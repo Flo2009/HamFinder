@@ -8,11 +8,11 @@ const { signToken } = require ("../utils/auth")
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
-      console.log(context);
+      console.log(context.user);
       if (!context.user){
         throw new AuthenticationError("Please Log In!");
       }
-      const user = await User.findById(context.user._id).populate('savedStations');
+      const user = await User.findById(context.user._id);//.populate('savedStations')
       return user;
     },
     
@@ -55,15 +55,24 @@ const resolvers = {
       if (!context.user){
         throw new AuthenticationError('You need to log in!');
       }
+      //console.log(stationData.stationId);
+
+      const user = await User.findById(context.user._id);
+
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
-        { $addToSet: { savedStations:  stationData  } },
+        { $addToSet: { savedStations: stationData  } },
         { new: true, runValidators: true }
       ).populate('savedStations');
 
-      return updatedUser;
-
+        if (user.savedStations.includes(stationData.stationId)){
+          console.log("hello");
+          throw new Error ("Cannot accept duplicates");
+        } else {
+          return updatedUser;
+        }
     },
+
     removeStation: async (parent, { stationId }, context) => {
       if (!context.user){
         throw new AuthenticationError('You need to log in!')

@@ -6,6 +6,10 @@ import logo from '../assets/images/logo.png'
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 import Auth from '../utils/auth';
+import { loadStripe } from '@stripe/stripe-js';
+// import { Elements, useStripe, useElement, CardElement } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe('pk_test_8wM6so2Ix2jc8Qo3cc')
 
 const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
@@ -20,6 +24,20 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     window.location.reload(); // Force page refresh
   };
 
+  // const handleClick = (event) => {
+  //   event.preventDefault();
+  //   if (!stripe || !elements){
+  //     return;
+  //   }
+
+  //   try {
+
+  //   }catch (err) {
+  //     console.log("An Error occurred during the creation of the checkout Sesssion", err);
+  //   }
+  // }
+
+  ///*onClick={handleClick}*/
   return (
     <>
       <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
@@ -46,7 +64,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
               {/* if user is logged in show saved stations and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/'>
+                  <Nav.Link as={Link} to='/' >
                     Donate
                   </Nav.Link>
                   <Nav.Link as={Link} to='/saved'>
