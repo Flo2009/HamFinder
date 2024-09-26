@@ -24,20 +24,19 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     <>
       <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Nav>
-        <Navbar.Brand 
-          className="hamfinder-custom" // Add inline styles
-          onClick={handleHomeClick} // Trigger page refresh
-        >
-          {/* Add the logo image */}
-          <img
-            src={logo}
-            alt="HamFinder Logo"
-            style={{ width: '40px', height: '40px', marginRight: '10px' }}
-            id="hamfinder-logo"
-          />
-          <span className="hamfinder-ham">Ham</span><span className="hamfinder-finder">Finder</span>
-        </Navbar.Brand>
+          <Navbar.Brand 
+            className="hamfinder-custom" // Add inline styles
+            onClick={handleHomeClick} // Trigger page refresh
+          >
+            {/* Add the logo image */}
+            <img
+              src={logo}
+              alt="HamFinder Logo"
+              style={{ width: '40px', height: '40px', marginRight: '10px' }}
+              id="hamfinder-logo"
+            />
+            <span className="hamfinder-ham">Ham</span><span className="hamfinder-finder">Finder</span>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
@@ -69,7 +68,6 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-     
 
       {/* set modal data up */}
       <Modal
