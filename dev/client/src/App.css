@@ -21,7 +21,7 @@
   --form-background-color: #444444;
   --form-text-color: #999;
   --button-background-color: #007bff;
-  --button-text-color: #ffffff;
+  --button-text-color: #555;
   --border-color: #555; /* Dark mode border */
   --heading-color: #f0f0f0;
   --hover-color: #ffffff; /* Hover color for dark mode */
@@ -136,8 +136,106 @@ h1 {
 
 /* search bar */
 
+/* Search Bar Container */
+.search-bar-container {
+  display: flex;
+  align-items: center; /* Vertically center content */
+  height: 100%; /* Match container height */
+}
+
 .custom-search-bar {
-  color: var(--form-text-color)
+  color: var(--form-text-color);
+  height: 100%; /* Ensure consistent height with dropdown and button */
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid var(--border-color);
+}
+
+/* Dropdown Wrapper */
+.my-custom-dropdown {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  vertical-align: middle; /* Align with search bar and button */
+  margin-left: 10px; /* Space between search bar and dropdown */
+  margin-right: 10px; /* Space between dropdown and submit button */
+}
+
+/* Dropdown Button */
+.my-custom-dropdown .btn-secondary {
+  background-color: #C3DDD6;
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  padding: 10px 20px; /* Ensure padding matches the search bar and submit button */
+  height: 100%; /* Matches the height of surrounding elements */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  line-height: 1.5rem; /* Vertically align text */
+}
+
+.my-custom-dropdown .btn-secondary:hover {
+  background-color: #80C2B0;
+  color: var(--button-text-color);
+  transform: scale(1.05);
+}
+
+.my-custom-dropdown .btn-secondary:active {
+  background-color: #397d3d;
+  transform: scale(0.95);
+}
+
+/* Dropdown Menu */
+.my-custom-dropdown .dropdown-menu {
+  background-color: #f9f9f9;
+  border: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Dropdown Menu Items */
+.my-custom-dropdown .dropdown-item {
+  color: var(--text-color);
+  padding: 10px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.my-custom-dropdown .dropdown-item:hover {
+  background-color: #80C2B0;
+  color: var(--button-text-color);
+}
+
+.my-custom-dropdown .dropdown-item:active {
+  background-color: #397d3d;
+  color: var(--button-text-color);
+}
+
+/* Submit Button */
+.custom-submit-btn {
+  background-color: #C3DDD6 !important;
+  color: var(--button-text-color) !important;
+  border: none !important;
+  border-radius: 25px !important;
+  padding: 10px 20px !important;
+  font-size: 1.2rem !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2) !important;
+  height: 48px !important; /* Match the height of the input and dropdown */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; /* Ensure the text is vertically centered */
+}
+
+.custom-submit-btn:hover {
+  background-color: #80C2B0 !important;
+  color: var(--button-text-color) !important;
+  transform: scale(1.05) !important;
+}
+
+.custom-submit-btn:active {
+  background-color: #397d3d !important; /* Darker green when active */
+  transform: scale(0.95) !important; /* Shrink effect when clicked */
 }
 
 /* Cards */
@@ -151,37 +249,13 @@ h1 {
   margin-bottom: 30px;
   padding: 15px; /* Increased inner padding */
 }
-
+ 
 .card:hover {
   border-color: #007bff;
   transform: scale(1.015);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   transition: transform 0.6s ease, color 0.6s ease, border-color 0.6s ease;
   transition: box-shadow 0.6s ease, color 0.6s ease, border-color 0.6s ease;
-}
-
-/* Buttons */
-.custom-submit-btn {
-  background-color: #C3DDD6;
-  color: var(--button-text-color);
-  border: none;
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  height: 100%; /* Ensure it matches the height of the input */
-}
-
-.custom-submit-btn:hover {
-  background-color: #80C2B0;
-  color: var(--button-text-color);
-  transform: scale(1.05);
-}
-
-.custom-submit-btn:active {
-  background-color: #397d3d; /* Even darker green when active */
-  transform: scale(0.95); /* Shrink effect when clicked */
 }
 
 /* flick switch for favorites */

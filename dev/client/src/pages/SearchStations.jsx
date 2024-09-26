@@ -179,7 +179,7 @@ const handleLanguage =(language) => {
                   </div>
                 </Col>
                 <Col xs={2} md={2}>
-                  <div className="dropdown">
+                  <div className="dropdown my-custom-dropdown">
                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Select Country
                     </button>
