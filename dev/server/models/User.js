@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// import schema from Book.js
-const bookSchema = require('./Book');
+// import schema from Station.js
+const Station = require('./Station');
 
 const userSchema = new Schema(
   {
@@ -21,8 +21,17 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+    donationAmount: {
+      type: Number,
+    },
+    donated: {
+      type: Boolean,
+    },
+    // set savedStations to be an array of data that adheres to the stationSchema//Station.schema
+    savedStations: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Station', // Reference to Station model
+    }],
   },
   // set this to use virtual below
   {
@@ -32,24 +41,16 @@ const userSchema = new Schema(
   }
 );
 
-// hash user password
-// userSchema.pre('save', async function (next) {
-//   if (this.isNew || this.isModified('password')) {
-//     const saltRounds = 10;
-//     this.password = await bcrypt.hash(this.password, saltRounds);
-//   }
 
-//   next();
-// });
 
-// // custom method to compare and validate password for logging in
+// custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+// when we query a user, we'll also get another field called `stationCount` with the number of saved stations we have
+userSchema.virtual('stationCount').get(function () {
+  return this.savedStations.length;
 });
 
 const User = model('User', userSchema);

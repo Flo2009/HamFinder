@@ -1,5 +1,5 @@
 {
-  "name": "googlebooks-app",
+  "name": "ham-finder-app",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -19,10 +19,13 @@
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.11.0",
+    "@stripe/react-stripe-js": "^2.8.0",
+    "@stripe/stripe-js": "^4.5.0",
     "apollo-server-express": "^3.13.0",
     "bcrypt": "^5.1.1",
     "express": "^4.21.0",
     "graphql": "^16.9.0",
+    "http-proxy-middleware": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.3",
     "punycode": "^2.3.1",

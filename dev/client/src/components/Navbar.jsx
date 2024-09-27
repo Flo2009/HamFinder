@@ -1,43 +1,79 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import logo from '../assets/images/logo.png'
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-
 import Auth from '../utils/auth';
+import { loadStripe } from '@stripe/stripe-js';
+// import { Elements, useStripe, useElement, CardElement } from '@stripe/react-stripe-js';
 
-const AppNavbar = () => {
+const stripePromise = loadStripe('pk_test_8wM6so2Ix2jc8Qo3cc')
+
+const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
+  // Inside your component
+  const navigate = useNavigate();
+
+  const handleHomeClick = (event) => {
+    event.preventDefault();
+    navigate('/');  // Navigate to the home page
+    window.location.reload(); // Force page refresh
+  };
+
+  
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            Google Books Search
+          <Navbar.Brand 
+            className="hamfinder-custom" // Add inline styles
+            onClick={handleHomeClick} // Trigger page refresh
+          >
+            {/* Add the logo image */}
+            <img
+              src={logo}
+              alt="HamFinder Logo"
+              style={{ width: '40px', height: '40px', marginRight: '10px' }}
+              id="hamfinder-logo"
+            />
+            <span className="hamfinder-ham">Ham</span><span className="hamfinder-finder">Finder</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/'>
-                Search For Books
+              <Nav.Link as={Link} to='/aboutus'>
+                About
               </Nav.Link>
-              {/* if user is logged in show saved books and logout */}
+              {/* if user is logged in show saved stations and logout */}
               {Auth.loggedIn() ? (
                 <>
+                  <Nav.Link as={Link} to='https://donate.stripe.com/test_8wM6so2Ix2jc8Qo3cc'>
+                    Donate
+                  </Nav.Link>
                   <Nav.Link as={Link} to='/saved'>
-                    See Your Books
+                    My Ham
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
               )}
+              {/* Dark Mode Toggle Button */}
+              <div
+                className={`analog-switch ${isDarkMode ? 'dark' : ''}`}
+                onClick={() => setIsDarkMode(!isDarkMode)}
+              >
+                <span className="switch-knob"></span>
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
       {/* set modal data up */}
       <Modal
         size='lg'

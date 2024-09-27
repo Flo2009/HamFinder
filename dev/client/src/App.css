@@ -1,17 +1,472 @@
-body {
-  font-family: 'Rubik', sans-serif;
+/* General Styles */
+:root {
+  --background-color: #f5f5f5; /* Light Mode */
+  --text-color: #333333;
+  --navbar-background-color: #d9d9d9; /* Softer metal-like background */
+  --card-background-color: #eaeaea; /* Metallic light gray */
+  --form-background-color: #e0e0e0; /* Metallic light gray for form */
+  --form-text-color: #999;
+  --button-background-color: #007bff;
+  --button-text-color: #333333;
+  --border-color: #999;
+  --heading-color: #333333;
+  --hover-color: #000000;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Rubik Mono One', sans-serif;
+.dark-mode {
+  --background-color: #1e1e1e; /* Dark Mode */
+  --text-color: #f0f0f0;
+  --navbar-background-color: #333333;
+  --card-background-color: #2c2c2c;
+  --form-background-color: #444444;
+  --form-text-color: #999;
+  --button-background-color: #007bff;
+  --button-text-color: #555;
+  --border-color: #555; /* Dark mode border */
+  --heading-color: #f0f0f0;
+  --hover-color: #ffffff; /* Hover color for dark mode */
 }
 
-.small {
-  font-weight: 300;
-  font-style: italic;
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.6s ease, color 0.6s ease; /* Increased duration */
+}
+
+/* Header Text */
+h1 {
+  color: var(--heading-color); /* Dynamic heading color */
+  font-family: 'Rubik Mono One', sans-serif; /* Industrial font */
+  letter-spacing: 1px; /* Rugged look */
+  text-transform: uppercase; /* All caps for stronger impact */
+  transition: color 0.6s ease;
+}
+
+/* Remove min-height from bg-dark and bg-light */
+.bg-dark, .bg-light {
+  min-height: auto; /* Default */
+}
+
+/* Apply min-height only to the main content container */
+.main-content {
+  min-height: 100vh; /* Ensure the content area takes full height */
+  background-color: var(--background-color);
+  padding-bottom: 60px;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* body */
+
+/* Navbar */
+.navbar {
+  background-color: var(--navbar-background-color) !important;
+  color: var(--text-color);
+  border-bottom: 2px solid var(--border-color); /* Metallic border */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+.my-custom-navbar {
+  padding: 15px 30px;
+  display: flex;
+  text-decoration: none;
+  font-weight: 500;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 -1px 2px rgba(255, 255, 255, 0.3);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.my-custom-navbar a {
+  color: var(--text-color) !important;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.my-custom-navbar a:focus,
+.my-custom-navbar a:active {
+  color: var(--text-color); /* Ensure text color remains correct */
+  outline: none; /* Remove outline if it's not desired */
+}
+
+.my-custom-navbar a:hover {
+  color: var(--hover-color) !important;
+  transform: scale(1.03); /* Slightly enlarge on hover */
+}
+
+.dark-mode .my-custom-navbar a {
+  color: var(--text-color) !important; /* White in dark mode */
+}
+
+/* logo */
+#hamfinder-logo {
+  position: relative;
+  top: -4px !important; /* Move the logo up */
+  margin-right: 3px !important;
+}
+
+/* title text */
+.hamfinder-custom {
+  font-family: 'Monospace', sans-serif;
+  font-size: 24px;
+  color: #007bff;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.hamfinder-ham {
+  color: #f179b5;
+  font-weight: bold;
+}
+
+.hamfinder-finder {
+  color: var(--heading-color);
+  font-weight: bold;
+}
+
+.hamfinder-custom:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+/* search bar */
+
+/* Search Bar Container */
+.search-bar-container {
+  display: flex;
+  align-items: center; /* Vertically center content */
+  height: 100%; /* Match container height */
+}
+
+.custom-search-bar {
+  color: var(--form-text-color);
+  height: 100%; /* Ensure consistent height with dropdown and button */
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid var(--border-color);
+}
+
+/* Dropdown Wrapper */
+.my-custom-dropdown {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  vertical-align: middle; /* Align with search bar and button */
+  margin-left: 10px; /* Space between search bar and dropdown */
+  margin-right: 10px; /* Space between dropdown and submit button */
+}
+
+/* Dropdown Button */
+.my-custom-dropdown .btn-secondary {
+  background-color: #C3DDD6;
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  padding: 10px 20px; /* Ensure padding matches the search bar and submit button */
+  height: 100%; /* Matches the height of surrounding elements */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  line-height: 1.5rem; /* Vertically align text */
+}
+
+.my-custom-dropdown .btn-secondary:hover {
+  background-color: #80C2B0;
+  color: var(--button-text-color);
+  transform: scale(1.05);
+}
+
+.my-custom-dropdown .btn-secondary:active {
+  background-color: #397d3d;
+  transform: scale(0.95);
+}
+
+/* Dropdown Menu */
+.my-custom-dropdown .dropdown-menu {
+  background-color: #f9f9f9;
+  border: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Dropdown Menu Items */
+.my-custom-dropdown .dropdown-item {
+  color: var(--text-color);
+  padding: 10px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.my-custom-dropdown .dropdown-item:hover {
+  background-color: #80C2B0;
+  color: var(--button-text-color);
+}
+
+.my-custom-dropdown .dropdown-item:active {
+  background-color: #397d3d;
+  color: var(--button-text-color);
+}
+
+/* Submit Button */
+.custom-submit-btn {
+  background-color: #C3DDD6 !important;
+  color: var(--button-text-color) !important;
+  border: none !important;
+  border-radius: 25px !important;
+  padding: 10px 20px !important;
+  font-size: 1.2rem !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2) !important;
+  height: 48px !important; /* Match the height of the input and dropdown */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; /* Ensure the text is vertically centered */
+}
+
+.custom-submit-btn:hover {
+  background-color: #80C2B0 !important;
+  color: var(--button-text-color) !important;
+  transform: scale(1.05) !important;
+}
+
+.custom-submit-btn:active {
+  background-color: #397d3d !important; /* Darker green when active */
+  transform: scale(0.95) !important; /* Shrink effect when clicked */
+}
+
+/* Cards */
+.card {
+  background-color: var(--card-background-color);
+  color: var(--text-color);
+  border: 0.5px solid var(--border-color); /* More rugged border */
+  border-radius: 5px; /* Slight curve for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 -1px 1px rgba(255, 255, 255, 0.1); /* Subtle inset shadow */
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+  margin-bottom: 30px;
+  padding: 15px; /* Increased inner padding */
+}
+ 
+.card:hover {
+  border-color: #007bff;
+  transform: scale(1.015);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+  transition: box-shadow 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+
+/* flick switch for favorites */
+/* Flick Switch Styles */
+.flick-switch {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: #e0e0e0; /* Switch background */
+  border: 2px solid #999; /* Switch border */
+  border-radius: 10px; /* Rounded edges for switch */
+  cursor: pointer;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inset shadow for 3D effect */
+  transition: background-color 0.4s ease;
+}
+
+.flick-switch.on {
+  background-color: #00ff00; /* Green when switched on */
+}
+
+.flick-knob {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background-color: #999; /* Knob color */
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: left 0.4s ease, background-color 0.4s ease;
+}
+
+.flick-switch.on .flick-knob {
+  left: 23px; /* Move the knob to the right when on */
+  background-color: #555; /* Darker color for knob when on */
+}
+
+/* Indicator Lights (for Favorites) */
+.indicator-light {
+  width: 15px;
+  height: 15px;
+  background-color: #ff0000; /* Off state (red) */
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Glowing effect */
+  transition: background-color 0.6s ease, box-shadow 0.6s ease;
+  margin-left: 15px; /* Space between switch and indicator */
+}
+
+.indicator-light.on {
+  background-color: #00ff00; /* On state (green) */
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+}
+
+/* Wrapper for Switch and Indicator */
+.flick-switch-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px; /* Space between content and switch */
+}
+
+/* Indicator Lights (for Favorites) */
+.indicator-light {
+  width: 15px;
+  height: 15px;
+  background-color: #ff0000; /* Off state (red) */
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Glowing effect */
+  transition: background-color 0.6s ease, box-shadow 0.6s ease;
+  margin-left: 15px; /* Space between button and indicator */
+}
+
+/* On state for Indicator Light */
+.indicator-light.on {
+  background-color: #00ff00; /* On state (green) */
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+}
+
+/* Wrapper to align button and indicator */
+.button-indicator-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px; /* Space between content and button */
+}
+
+/* Forms */
+.form-control {
+  background-color: var(--form-background-color);
+  color: var(--form-text-color);
+  border: 0.5px solid var(--border-color); /* Rugged form borders */
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+
+input[type="text"] {
+  background-color: var(--form-background-color);
+  color: var(--form-text-color);
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  width: 100%;
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+
+input[type="text"]::placeholder {
+  color: var(--form-text-color);
+}
+
+.dark-mode input[type="text"] {
+  background-color: var(--form-background-color);
+  color: var(--form-text-color);
+  border: 1px solid var(--border-color);
+}
+
+.dark-mode input[type="text"]::placeholder {
+  color: var(--form-text-color);
+}
+
+#searchFormSection {
+  background-color: var(--background-color);
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Analog switch styling */
+.analog-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
+  height: 30px;
+  background-color: #e0e0e0;
+  border-radius: 30px;
+  border: 2px solid #8c8c8c;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-left: 20px; /* Adjust margin to space it properly */
+  vertical-align: middle; /* Ensure it's inline with the text */
+  margin-top: 5px;
+}
+
+/* Knob (the circular button part of the switch) */
+.switch-knob {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background-color: #b3b3b3;
+  border-radius: 50%;
+  transition: left 0.4s ease, background-color 0.4s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15), inset 0 -2px 5px rgba(255, 255, 255, 0.4);
+}
+
+.dark .switch-knob {
+  left: 32px;
+  background-color: #555;
+}
+
+/* Hide the label when the knob covers it */
+.switch-label {
+  display: none; /* Hide the label, since you want only the switch */
+}
+/* src/components/AboutUs.css */
+.about-us-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+
+/* About Us Page*/
+.about-us-header {
+  background-color: #f4f4f4;
+  padding: 50px 0;
+}
+
+.about-us-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.about-us-header p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.about-us-content {
+  padding: 30px 0;
+}
+
+.about-us-content section {
+  margin-bottom: 40px;
+}
+
+.about-us-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+.about-us-footer h3 {
+  font-size: 1.5rem;
+}
+
+.about-us-footer p {
+  margin: 5px 0;
 }

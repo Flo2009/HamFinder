@@ -26,31 +26,34 @@ export const ADD_USER = gql`
   }
 `;
 
-export const SAVE_BOOK = gql`
-  mutation saveBook ($bookData: BookInput!) {
-    saveBook(bookData: $bookData) {
+export const SAVE_STATION = gql`
+  mutation saveStation ($stationData: StationInput!) {
+    saveStation(stationData: $stationData) {
       _id
       username
-      savedBooks {
-        bookId
-        title
-        authors
-        description
+      savedStations {
+        stationId
+        name
+        country
+        clickcount
         image
-        link
+        url
+        homepage
+        color
+        isFavorite
       }
     }
   }
 `;
 
-export const REMOVE_BOOK = gql`
-  mutation removeBook ($bookId: String!) {
-    removeBook(bookId: $bookId) {
+export const REMOVE_STATION = gql`
+  mutation removeStation ($stationId: String!) {
+    removeStation(stationId: $stationId) {
       _id
       username
-      savedBooks {
-        bookId
-        title
+      savedStations {
+        stationId
+        name
       }
     }
   }

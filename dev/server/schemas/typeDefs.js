@@ -3,17 +3,22 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
-    bookCount: Int
-    savedBooks: [Book]
+    donationAmount: Float
+    donated: Boolean
+    stationCount: Int
+    savedStations: [Station]
   }
 
-  type Book {
-    bookId: String!
-    authors: [String]
-    description: String!
-    title: String!
+  type Station {
+    stationId: String!
+    country: String
+    clickcount: Int
+    name: String!
     image: String
-    link: String
+    url: String
+    homepage: String
+    color: String
+    isFavorite: Boolean
   }
 
   type Auth {
@@ -25,20 +30,23 @@ const typeDefs = `
     me: User
   }
 
-  input BookInput{
-    authors:[String]
-    description: String!
-    title: String!
-    bookId: String!
+  input StationInput{
+    country:String
+    clickcount: Int
+    name: String!
+    stationId: String!
     image: String
-    link: String
+    url: String
+    homepage: String
+    color: String
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    saveBook(bookData: BookInput!): User
-    removeBook(bookId: String!): User
+    addUser(username: String!, email: String!, password: String!, donationAmount: Float, donated: Boolean): Auth
+    saveStation(stationData: StationInput!): User
+    removeStation(stationId: String!): User
+    addDonation(donationAmount: Float): User
   }
 `;
 
