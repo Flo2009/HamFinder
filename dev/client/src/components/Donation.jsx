@@ -1,23 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_PAYMENT_INTENT, UPDATE_USER_DONATION } from '../utils/mutations';
 import '../App.css'; // Optional: Use if you're using external CSS for styling.
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useElements, useStripe, CardElement } from '@stripe/react-stripe-js';
-
+import { Elements, useElements, useStripe, CardElement, PaymentElement } from '@stripe/react-stripe-js';
+import { useNavigate } from 'react-router-dom';
 
 // Stripe Public Key
 const stripePromise = loadStripe('pk_test_51Q2hSHHz1ELVl9MVTQ651hh3KN64RyV6yakXXS3GMIp9l4Eu4kKV4fVClp0pT0g8k4b8LhouoL1U9A1RJrNE0kbQ00Ir1kEh99');
 
-const DonationForm = () => {
+const DonationForm = ({ clientSecret }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [selectedAmount, setSelectedAmount] = useState(0);
     const [customAmount, setCustomAmount] = useState('');
     const [loading, setLoading] = useState(false);
-    
-    const [createPaymentIntent] = useMutation(CREATE_PAYMENT_INTENT);
+    const navigate = useNavigate();
+
     const [updateUserDonation] = useMutation(UPDATE_USER_DONATION);
 
     const fixedAmounts = [5, 10, 20, 50, 100]; // Fixed donation amounts
@@ -43,18 +43,20 @@ const DonationForm = () => {
         setLoading(true);
         
         try {
-        // Call the GraphQL mutation to create a Payment Intent
-        const { data: paymentData } = await createPaymentIntent({
-            variables: { amount: donationAmount },
-        });
+        // // Call the GraphQL mutation to create a Payment Intent
+        // const { data: paymentData } = await createPaymentIntent({
+        //     variables: { amount: donationAmount },
+        // });
 
-        const clientSecret = paymentData.createPaymentIntent.clientSecret;
+        // const clientSecret = paymentData.createPaymentIntent.clientSecret;
         
         // Confirm the payment using Stripe
-        const result = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-            card: elements.getElement(CardElement),
-            },
+        const result = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+            }, 
+            redirect: 'if_required',
+           
         });
         console.log(result);
         if (result.error) {
@@ -64,6 +66,7 @@ const DonationForm = () => {
             // After successful payment, update the user donation information
             await updateUserDonation({ variables: { amount: donationAmount } });
             alert('Donation successful! Thank you.');
+            navigate('/');
             }
         }
         } catch (error) {
@@ -100,7 +103,7 @@ const DonationForm = () => {
             />
         </Form.Group>
 
-        <CardElement className="mb-3" />
+        <PaymentElement className="mb-3" />
 
         <div className="text-center">
             <Button variant="success" type="submit" disabled={!stripe || loading}>
@@ -111,13 +114,37 @@ const DonationForm = () => {
     );
   };
   
-const Donation = () => (
-<Container className="mt-5">
-    <h1 className="text-center mb-4">Donate</h1>
-    <Elements stripe={stripePromise}>
-    <DonationForm />
-    </Elements>
-</Container>
-);
+const Donation = () => {
+    const [clientSecret, setClientSecret] = useState('');
+    
+    const [createPaymentIntent] = useMutation(CREATE_PAYMENT_INTENT);
+     // Fetch the clientSecret when the component mounts
+     useEffect(() => {
+        const fetchClientSecret = async () => {
+            try {
+                const { data } = await createPaymentIntent({ variables: { amount: 1 } }); // Initialize with a minimal amount
+                setClientSecret(data.createPaymentIntent.clientSecret);
+            } catch (error) {
+                console.error('Error fetching clientSecret:', error);
+            }
+        };
+        fetchClientSecret();
+    }, [createPaymentIntent]);
 
+const options = {
+    clientSecret: clientSecret,
+};
+
+return (
+    <Container className="mt-5">
+        <h1 className="text-center mb-4">Donate</h1>
+        {clientSecret && (
+            <Elements stripe={stripePromise} options={options} >
+                <DonationForm clientSecret={clientSecret}/>
+            </Elements>
+         )}
+    </Container>
+    );
+
+};
 export default Donation;
