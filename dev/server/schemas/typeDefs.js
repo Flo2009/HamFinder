@@ -3,7 +3,7 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
-    donationAmount: Float
+    donationAmount: [Int]
     donated: Boolean
     stationCount: Int
     savedStations: [Station]
@@ -30,6 +30,10 @@ const typeDefs = `
     me: User
   }
 
+  type PaymentIntentResponse {
+    clientSecret: String!
+  }
+
   input StationInput{
     country:String
     clickcount: Int
@@ -46,7 +50,8 @@ const typeDefs = `
     addUser(username: String!, email: String!, password: String!, donationAmount: Float, donated: Boolean): Auth
     saveStation(stationData: StationInput!): User
     removeStation(stationId: String!): User
-    addDonation(donationAmount: Float): User
+    createPaymentIntent(amount: Int!): PaymentIntentResponse!
+    updateUserDonation(amount: Int!): User!
   }
 `;
 

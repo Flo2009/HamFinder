@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { Station } = require('../models')
 const { signToken } = require ("../utils/auth")
-
+const Stripe = require('stripe');
+const stripe = Stripe('sk_test_51Q2hSHHz1ELVl9MVBeinOPPqIcuTpkfeDryOyXRENcdpCoIfRtHoXtKv3mdPga98exclIRQVUqvjduV6wnRR9igb00Ocap2q2R');
 
 const resolvers = {
   Query: {
@@ -61,13 +62,7 @@ const resolvers = {
         //find the user to update with the session user id
         const updatedUser = await User.findByIdAndUpdate(context.user._id).populate('savedStations');
 
-        // const updatedUser = await User.findByIdAndUpdate(
-        //   context.user._id,
-        //   { $addToSet: { savedStations: stationData  } },
-        //   { new: true, runValidators: true }
-        // ).populate('savedStations');
-        
-        if (!updatedUser) {
+       if (!updatedUser) {
           console.log("No user found to update!")
           return { success: false, message: "User not found" };
         }
@@ -76,7 +71,7 @@ const resolvers = {
         console.log(savedStationIds);
         let currentStations = await Station.find({ _id: { $in: savedStationIds } });
           console.log(currentStations);
-        
+        //check if station exists
         const stationExists = currentStations.some(
           (station) => station.stationId === stationData.stationId
         )
@@ -86,7 +81,7 @@ const resolvers = {
           return { success: false, message: "Station is already saved" };
         };
         
-        // If the station doesn't exist, find or create the station
+        // If the station doesn't exist, create the station
         let station = await Station.findOne({ stationId: stationData.stationId });
 
         if (!station) {
@@ -94,16 +89,11 @@ const resolvers = {
           station = new Station(stationData);
           await station.save();
         }
-        
+        //push to the user
         updatedUser.savedStations.push(station._id)
         await updatedUser.save();
         console.log(updatedUser);
-
-        // const returnStationIds= updatedUser.savedStations;
-        // console.log(savedStationIds);
-        // let returnStations = await Station.find({ _id: { $in: returnStationIds } });
-        //   console.log(returnStations);
-
+        //populate the user, so that the station information gets passed to front-end
         const update = await User.findByIdAndUpdate(context.user._id).populate('savedStations');
         return update;
     } catch (err){
@@ -122,8 +112,10 @@ const resolvers = {
         if (!user) {
           return { success: false, message: "User not found" };
         }
+        //get the station Id to remove
         const savedStationIds= user.savedStations;
         console.log(savedStationIds);
+        //retrieve all stations accociated with the user
         let currentStations = await Station.find({ _id: { $in: savedStationIds } });
           console.log(currentStations);
         const stationToRemove = currentStations.find(station => station.stationId === stationId)
@@ -132,6 +124,7 @@ const resolvers = {
           console.log("No station to remove present!");
           return { success: false, message: "Station not found in user's saved stations" };
         }
+        //remove the station, when present and return update to the front-end poulated
         const updatedUser = await User.findByIdAndUpdate(
           context.user._id,
           { $pull: { savedStations: stationToRemove._id } }, // Remove the Station's ObjectId
@@ -143,23 +136,34 @@ const resolvers = {
         return { success: false, message: "An Error occured during the process!"}
       }
 
-    //   const updatedUser = await User.findByIdAndUpdate(
-    //     context.user._id,
-    //     { $pull: { savedStations:  stationId  } },
-    //     { new: true }
-    //   );
-      
-    //   return updatedUser;
     },
 
-    addDonation: async (parent, { donationAmount }, context) => {
+    // Create payment intent for Stripe
+    createPaymentIntent: async (parent, { amount }) => {
+      try {
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: amount * 100, // Amount in cents
+          currency: 'usd',
+        });
+        return {
+          clientSecret: paymentIntent.client_secret,
+        };
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+
+    updateUserDonation: async (parent, { amount }, context) => {
       if (!context.user){
         throw new AuthenticationError('You need to log in!')
       };
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
-        { $addToSet: { donationAmount:  donationAmount, donated: true } },
-        { new: true, runValidators: true }
+        { $addToSet: { donationAmount: amount }, 
+          $set: { donated: true } 
+        },
+          
+        { new: true }
       );
       return updatedUser;
     },

@@ -6,6 +6,7 @@ import App from './App.jsx'
 import SearchStations from './pages/SearchStations.jsx'
 import SavedStations from './pages/SavedStations.jsx'
 import AboutUs from './components/AboutUs.jsx'
+import Donation from './components/Donation.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       },{
         path: '/aboutus',
         element: < AboutUs />
+      },
+      {
+        path: '/donate',
+        element: < Donation />
       }
     ]
   }

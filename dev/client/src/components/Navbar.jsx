@@ -51,7 +51,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
               {/* if user is logged in show saved stations and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='https://donate.stripe.com/test_8wM6so2Ix2jc8Qo3cc'>
+                  <Nav.Link as={Link} to='/donate'>{/* https://donate.stripe.com/test_8wM6so2Ix2jc8Qo3cc */}
                     Donate
                   </Nav.Link>
                   <Nav.Link as={Link} to='/saved'>

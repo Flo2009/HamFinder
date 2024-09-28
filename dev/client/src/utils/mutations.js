@@ -58,3 +58,21 @@ export const REMOVE_STATION = gql`
     }
   }
 `;
+
+export const CREATE_PAYMENT_INTENT = gql`
+  mutation CreatePaymentIntent($amount: Int!) {
+    createPaymentIntent(amount: $amount) {
+      clientSecret
+    }
+  }
+`;
+
+export const UPDATE_USER_DONATION = gql`
+  mutation UpdateUserDonation($amount: Int!) {
+    updateUserDonation(amount: $amount) {
+      username
+      donated
+      donationAmount
+    }
+  }
+`;
