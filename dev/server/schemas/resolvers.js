@@ -157,14 +157,16 @@ const resolvers = {
       if (!context.user){
         throw new AuthenticationError('You need to log in!')
       };
+      console.log(amount);
       const updatedUser = await User.findByIdAndUpdate(
         context.user._id,
-        { $addToSet: { donationAmount: amount }, 
+        { $push: { donationAmount: amount }, 
           $set: { donated: true } 
         },
           
         { new: true }
       );
+      console.log(updatedUser)
       return updatedUser;
     },
   },

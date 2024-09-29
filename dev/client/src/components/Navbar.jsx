@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
@@ -7,6 +7,9 @@ import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 import Auth from '../utils/auth';
 import { loadStripe } from '@stripe/stripe-js';
+import { calculateTotalDonations } from '../utils/donationCalculation';
+import { useQuery } from '@apollo/client';
+import { ME_DONATION } from '../utils/queries';
 // import { Elements, useStripe, useElement, CardElement } from '@stripe/react-stripe-js';
 
 const stripePromise = loadStripe('pk_test_8wM6so2Ix2jc8Qo3cc')
@@ -14,7 +17,12 @@ const stripePromise = loadStripe('pk_test_8wM6so2Ix2jc8Qo3cc')
 const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
+  const isLoggedIn = Auth.loggedIn(); 
 
+  const { loading, error, data, refetch } = useQuery(ME_DONATION, {
+    skip: !isLoggedIn,
+    fetchPolicy: 'network-only', // Ensure fresh data on every request
+  });
   // Inside your component
   const navigate = useNavigate();
 
@@ -23,6 +31,18 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     navigate('/');  // Navigate to the home page
     window.location.reload(); // Force page refresh
   };
+  console.log(data);
+
+  // Re-fetch the donation data on page redirect or load
+  useEffect(() => {
+    if (isLoggedIn) {
+      refetch();  // Refetch the user data whenever the component is mounted
+    }
+  }, [refetch, isLoggedIn]);
+
+  // Check if data exists and user is defined
+  const user = data ? data.me : null;
+  const totalDonated = user && user.donated ? calculateTotalDonations(user.donationAmount) : 0;
 
   
   return (
@@ -58,6 +78,11 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
                     My Ham
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                  {user && user.donated && (
+                    <div className="navbar-donation">
+                      <span>Total Donated: ${totalDonated}</span>
+                    </div>
+                  )}
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>

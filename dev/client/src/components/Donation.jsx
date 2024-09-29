@@ -34,7 +34,8 @@ const DonationForm = ({ clientSecret }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const donationAmount = customAmount ? customAmount : selectedAmount;
+        let donationAmount = customAmount ? customAmount : selectedAmount;
+        donationAmount = parseInt(donationAmount);
         console.log(donationAmount);
         if (!stripe || !elements || donationAmount <= 0) {
         return;
@@ -54,6 +55,7 @@ const DonationForm = ({ clientSecret }) => {
         const result = await stripe.confirmPayment({
             elements,
             confirmParams: {
+                return_url: window.location.origin + '/',
             }, 
             redirect: 'if_required',
            
@@ -67,6 +69,7 @@ const DonationForm = ({ clientSecret }) => {
             await updateUserDonation({ variables: { amount: donationAmount } });
             alert('Donation successful! Thank you.');
             navigate('/');
+            window.location.reload();
             }
         }
         } catch (error) {

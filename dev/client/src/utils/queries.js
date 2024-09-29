@@ -20,4 +20,14 @@ export const GET_ME = gql`
   }
 `;
 
+export const ME_DONATION = gql`
+query me {
+  me{
+  _id
+  donated
+  donationAmount
+  }
+}
+`;
+ 
 
