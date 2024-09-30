@@ -80,7 +80,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                   {user && user.donated && (
                     <div className="navbar-donation">
-                      <span>Total Donated: ${totalDonated}</span>
+                      <span>Donated Ham: ${totalDonated}</span>
                     </div>
                   )}
                 </>
