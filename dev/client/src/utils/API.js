@@ -2,12 +2,22 @@ export const searchRadioStations = async (query, language) => {
   const baseURL = 'https://de1.api.radio-browser.info/json/stations/search';
   
   // Define filter as an object
-  let filter = {
-    name: query,
-    //limit: ,         // Limit results
-    tag: query, 
-    countrycode: language, //search by country      
-  };
+  // If no query is provided (e.g., for fetching top stations), adjust the filter
+  let filter = {};
+  if (query) {
+    filter = {
+      name: query,
+      tag: query,
+      countrycode: language, // search by country      
+    };
+  } else {
+    // Fetch top stations by click count or any other logic for top stations
+    filter = {
+      order: 'clickcount', // Fetch top stations by click count
+      reverse: true, // Highest click count first
+      limit: 8,
+    };
+  }
 
   // Construct the URL with query parameters using URLSearchParams
   const params = new URLSearchParams(filter).toString();
