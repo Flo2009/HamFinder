@@ -207,8 +207,6 @@ const SearchStations = () => {
     setLanguage(language)
   }
 
-
-
   return (
     <>      
       {/* Main Search Section */}
