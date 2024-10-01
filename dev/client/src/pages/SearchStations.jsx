@@ -125,75 +125,87 @@ const SearchStations = () => {
 
   // handleToggleFavorite function
   const handleToggleFavorite = async (stationId) => {
-  const isFavorite = savedStationIds.includes(stationId);
-  const token = Auth.loggedIn() ? Auth.getToken() : null;
+    const isFavorite = savedStationIds.includes(stationId);
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-  if (!token) {
-    return false;
-  }
+    if (!token) {
+      return false;
+    }
 
-  try {
-    if (isFavorite) {
-      // Logic to remove station if it's a favorite
-      const { data } = await removeStation({
-        variables: { stationId }, // Pass the stationId to remove it
-        context: {
-          headers: {
-            authorization: `Bearer ${token}`,
+    try {
+      if (isFavorite) {
+        // Logic to remove station if it's a favorite
+        const { data } = await removeStation({
+          variables: { stationId }, // Pass the stationId to remove it
+          context: {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
           },
-        },
-      });
+        });
 
-      if (!data) {
-        throw new Error('Error removing station!');
-      }
+        if (!data) {
+          throw new Error('Error removing station!');
+        }
 
       // Update the savedStationIds in state and localStorage after removing
       const updatedSavedIds = savedStationIds.filter((id) => id !== stationId);
       setSavedStationIds(updatedSavedIds);
       saveStationIds(updatedSavedIds); // Save updated IDs to localStorage
 
-    } else {
-      // Logic to save the station if it's not a favorite
-      const stationToSave = searchedStations.find((station) => station.stationId === stationId);
-      
-      // Exclude `isFavorite` from `stationToSave` before sending it to the mutation
-      const { isFavorite, color, ...stationDataToSave } = stationToSave;
-      console.log("My station:" , stationDataToSave.stationId);
-      const { data } = await saveStation({
-        variables: { stationData: stationDataToSave },
-        context: {
-          headers: {
-            authorization: `Bearer ${token}`,
+      } else {
+        // Logic to save the station if it's not a favorite
+        const stationToSave = 
+        searchedStations.find((station) => station.stationId === stationId) ||
+        topStations.find((station) => station.stationId === stationId);
+
+        if (!stationToSave) {
+          console.error('Station not found!');
+          return;
+        }
+        
+        // Exclude `isFavorite` from `stationToSave` before sending it to the mutation
+        const { isFavorite, color, ...stationDataToSave } = stationToSave;
+        console.log("My station:" , stationDataToSave.stationId);
+
+        const { data } = await saveStation({
+          variables: { stationData: stationDataToSave },
+          context: {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
           },
-        },
-      });
+        });
 
-      if (!data) {
-        throw new Error('Something went wrong!');
+        if (!data) {
+          throw new Error('Something went wrong!');
+        }
+        console.log(data);
+        // Update the savedStationIds in state and localStorage after saving
+        const updatedSavedIds = [...savedStationIds, stationId];
+        setSavedStationIds(updatedSavedIds);
+        saveStationIds(updatedSavedIds); // Save updated IDs to localStorage
       }
-      console.log(data);
-      // Update the savedStationIds in state and localStorage after saving
-      const updatedSavedIds = [...savedStationIds, stationId];
-      setSavedStationIds(updatedSavedIds);
-      saveStationIds(updatedSavedIds); // Save updated IDs to localStorage
-    }
 
-    // Update the favorite status in the search results
-    setSearchedStations((prevStations) =>
-      prevStations.map((station) =>
-        station.stationId === stationId
-          ? { ...station, isFavorite: !isFavorite }
-          : station
-      )
-    );
-  } catch (err) {
-    console.error(err);
+      // Update the favorite status in the search results and top stations
+      setSearchedStations((prevStations) =>
+        prevStations.map((station) =>
+          station.stationId === stationId ? { ...station, isFavorite: !isFavorite } : station
+        )
+      );
+
+      setTopStations((prevStations) =>
+        prevStations.map((station) =>
+          station.stationId === stationId ? { ...station, isFavorite: !isFavorite } : station
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleLanguage =(language) => {
+    setLanguage(language)
   }
-};
-const handleLanguage =(language) => {
-  setLanguage(language)
-}
 
   return (
     <>      
