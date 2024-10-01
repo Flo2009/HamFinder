@@ -20,4 +20,18 @@ export const GET_ME = gql`
   }
 `;
 
-
+export const ME_DONATION = gql`
+query me {
+  me{
+  _id
+  donated
+  donationAmount
+  }
+}
+`;
+ 
+export const GET_TOTAL_DONATIONS = gql`
+  query GetTotalDonations {
+    allDonations
+  }
+`;

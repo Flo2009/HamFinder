@@ -57,7 +57,7 @@ As a radio listener, I want to search for new radio stations to listen to so tha
 
 1. Clone the repository:
     ```bash
-    git clone <repository-url>
+    git clone <repository-url](https://github.com/Flo2009/HamFinder.git>
     ```
 
 2. Install the necessary dependencies:
