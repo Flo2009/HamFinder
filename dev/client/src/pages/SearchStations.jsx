@@ -211,7 +211,7 @@ const handleLanguage =(language) => {
               const isFavorite = savedStationIds.includes(station.stationId);
 
               return (
-                <Col md="4" key={station.stationId}>
+                <Col md="2" lg ="2" key={station.stationId}>
                 
                     <Card border='dark'>
                         <a href= {station.url}>
