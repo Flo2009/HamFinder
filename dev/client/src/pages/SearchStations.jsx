@@ -14,6 +14,10 @@ import { generateSVGPlaceholder } from '../utils/SVG';
 const SearchStations = () => {
   // create state for holding returned google api data
   const [searchedStations, setSearchedStations] = useState([]);
+
+  // create state for holding top stations on page load
+  const [topStations, setTopStations] = useState([]);
+
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
@@ -42,6 +46,39 @@ const SearchStations = () => {
   const generateRandomColor = () => {
     return Math.floor(Math.random() * 16777215).toString(16);
   };
+
+  // Fetch top stations on page load
+  useEffect(() => {
+    const fetchTopStations = async () => {
+      try {
+        // Fetch top or random stations from API
+        const response = await searchRadioStations('', language); // No search query, so it fetches top stations
+
+        if (response) {
+          const stationData = response.map((station) => ({
+            stationId: station.stationuuid,
+            name: station.name.substring(0, 20),
+            country: station.country,
+            image: station.favicon || '',
+            url: station.url_resolved,
+            homepage: station.homepage,
+            clickcount: station.clickcount,
+            color: generateRandomColor(),
+          }));
+
+          // Limit to 6 stations and update favorite status
+          const limitedStations = stationData.slice(0, 8);
+          const updatedTopStations = updateFavoriteStatus(limitedStations, savedStationIds);
+          
+          setTopStations(updatedTopStations);
+        }
+      } catch (err) {
+        console.error('Error fetching top stations:', err);
+      }
+    };
+
+    fetchTopStations();
+  }, [language, savedStationIds]);
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -79,6 +116,7 @@ const SearchStations = () => {
       setSearchedStations(updatedStations);
       setSearchInput('');
       setError (null);
+      setTopStations([]); // Clear top stations when search is performed
     } catch (err) {
       setError('There was an error processing your search.')
       console.error(err);
@@ -199,7 +237,49 @@ const handleLanguage =(language) => {
             </Form>
           </Container>
         </div>
-
+        
+        {/* Top Stations Section */}
+        {topStations.length > 0 && (
+          <Container>
+            <h2 className='pt-5'>Top Stations:</h2>
+            <Row className="gy-4">
+              {topStations.map((station) => (
+                <Col md="3" key={station.stationId}>
+                  <Card border='dark'>
+                    <a href={station.url}>
+                      {station.image ? (
+                        <Card.Img src={station.image} alt={`The cover for ${station.name}`} variant='top' />
+                      ) : (
+                        <Card.Img src={generateSVGPlaceholder(station.name, station.color)} alt={`Placeholder for ${station.name}`} variant='top' />
+                      )}
+                    </a>
+                    <Card.Body>
+                      <Card.Title>{station.name}</Card.Title>
+                      <a href={station.homepage}>
+                        <Card.Text>Station Homepage</Card.Text>
+                      </a>
+                      <Card.Text>{station.country}</Card.Text>
+                      <Card.Text>Clicks: {station.clickcount}</Card.Text>
+                      {Auth.loggedIn() && (
+                            // Flick Switch and Indicator Light Wrapper
+                            <div className="flick-switch-wrapper">
+                              {/* Flick Switch */}
+                              <div className={`flick-switch ${station.isFavorite ? 'on' : ''}`} onClick={() => handleToggleFavorite(station.stationId)}>
+                                <div className="flick-knob"></div>
+                              </div>
+                              {/* Indicator Light */}
+                              <div className={`indicator-light ${station.isFavorite ? 'on' : ''}`}></div>
+                            </div>
+                          )}
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        )}
+        
+        {/* Search Results Section */}
         <Container>
           <h2 className='pt-5'>
             {searchedStations.length
