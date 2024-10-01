@@ -30,4 +30,8 @@ query me {
 }
 `;
  
-
+export const GET_TOTAL_DONATIONS = gql`
+  query GetTotalDonations {
+    allDonations
+  }
+`;
