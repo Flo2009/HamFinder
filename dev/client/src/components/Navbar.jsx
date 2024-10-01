@@ -9,7 +9,7 @@ import Auth from '../utils/auth';
 import { loadStripe } from '@stripe/stripe-js';
 import { calculateTotalDonations } from '../utils/donationCalculation';
 import { useQuery } from '@apollo/client';
-import { ME_DONATION } from '../utils/queries';
+import { ME_DONATION, GET_TOTAL_DONATIONS } from '../utils/queries';
 // import { Elements, useStripe, useElement, CardElement } from '@stripe/react-stripe-js';
 
 const stripePromise = loadStripe('pk_test_8wM6so2Ix2jc8Qo3cc')
@@ -19,10 +19,12 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   const [showModal, setShowModal] = useState(false);
   const isLoggedIn = Auth.loggedIn(); 
 
-  const { loading, error, data, refetch } = useQuery(ME_DONATION, {
+  const { loading: userLoading, error: userError, data: userData, refetch } = useQuery(ME_DONATION, {
     skip: !isLoggedIn,
     fetchPolicy: 'network-only', // Ensure fresh data on every request
   });
+  // Fetch the total donation amount
+  const { loading: totalLoading, error: totalError, data: totalData } = useQuery(GET_TOTAL_DONATIONS);
   // Inside your component
   const navigate = useNavigate();
 
@@ -31,7 +33,7 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     navigate('/');  // Navigate to the home page
     window.location.reload(); // Force page refresh
   };
-  console.log(data);
+  console.log(userData);
 
   // Re-fetch the donation data on page redirect or load
   useEffect(() => {
@@ -41,9 +43,18 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   }, [refetch, isLoggedIn]);
 
   // Check if data exists and user is defined
-  const user = data ? data.me : null;
-  const totalDonated = user && user.donated ? calculateTotalDonations(user.donationAmount) : 0;
+  // const user = data ? data.me : null;
+  // const totalDonated = user && user.donated ? calculateTotalDonations(user.donationAmount) : 0;
 
+  let totalDonatedByUser = 0;
+  if (isLoggedIn && userData && userData.me.donated) {
+    totalDonatedByUser = calculateTotalDonations(userData.me.donationAmount);
+  }
+
+  let totalDonations = 0;
+  if (totalData && totalData.allDonations) {
+    totalDonations = totalData.allDonations;
+  }
   
   return (
     <>
@@ -78,14 +89,20 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
                     My Ham
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
-                  {user && user.donated && (
+                  {userData && userData.me.donated && (
                     <div className="navbar-donation">
-                      <span>Donated Ham: ${totalDonated}</span>
+                      <span>Donated Ham: ${totalDonatedByUser}</span>
                     </div>
                   )}
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+              )}
+               {/* Display total donations across all users */}
+               {!totalLoading && !totalError && (
+                <div className="navbar-donation">
+                  <span>Total Ham: ${totalDonations}</span>
+                </div>
               )}
               {/* Dark Mode Toggle Button */}
               <div

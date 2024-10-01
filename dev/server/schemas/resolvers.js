@@ -17,7 +17,20 @@ const resolvers = {
       const user = await User.findById(context.user._id).populate('savedStations')
       return user;
     },
-    
+
+    allDonations: async () => {
+      const users = await User.find();  // Fetch all users
+      let totalDonations = 0;
+      
+      users.forEach(user => {
+        if (user.donated && user.donationAmount) {
+          totalDonations += user.donationAmount.reduce((sum, amount) => sum + amount, 0);
+        }
+      });
+      
+      return totalDonations;
+    }
+  
   },
   Mutation: {
     login: async (parent, { email, password }) => {

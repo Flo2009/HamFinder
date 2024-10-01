@@ -29,6 +29,10 @@ const typeDefs = `
   type Query {
     me: User
   }
+  
+  type Query {
+    allDonations: Int
+  }
 
   type PaymentIntentResponse {
     clientSecret: String!
