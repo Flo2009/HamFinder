@@ -25,7 +25,7 @@ const SearchStations = () => {
   // mutations
   const [saveStation] = useMutation(SAVE_STATION);
   const [removeStation] = useMutation(REMOVE_STATION);
-  const [language, setLanguage] = useState('');
+  const [language, setLanguage] = useState('Select Country');
 
   // Get dark mode from context
   const { isDarkMode } = useOutletContext(); 
@@ -157,6 +157,8 @@ const handleLanguage =(language) => {
   setLanguage(language)
 }
 
+
+
   return (
     <>      
       {/* Main Search Section */}
@@ -181,7 +183,7 @@ const handleLanguage =(language) => {
                 <Col xs={2} md={2}>
                   <div className="dropdown my-custom-dropdown">
                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Select Country
+                      {language} {/* Display the selected country */}
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
                       <button className="dropdown-item" type="button"onClick={() =>handleLanguage("US")}>USA</button>
