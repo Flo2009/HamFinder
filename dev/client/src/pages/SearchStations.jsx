@@ -228,7 +228,7 @@ const SearchStations = () => {
                       className="custom-search-bar"/>
                   </div>
                 </Col>
-                <Col xs={12} md={6} className="d-flex align-items-center">
+                <Col xs={2} md={2} className="d-flex align-items-center">
                       {/* {2} md={2}  */}
                   {/* <div className="d-flex justify-content-start align-items-center flex-wrap"> */}
                       <div className="dropdown my-custom-dropdown">
