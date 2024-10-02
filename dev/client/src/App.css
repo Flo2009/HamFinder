@@ -136,6 +136,13 @@ h1 {
   transform: scale(1.03);
 }
 
+/* Donations Display */
+
+.navbar-donation:hover {
+  transform: none !important;
+  cursor: default;
+}
+
 /* search bar */
 
 /* Search Bar Container */
