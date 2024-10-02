@@ -6,6 +6,7 @@ import '../App.css'; // Optional: Use if you're using external CSS for styling.
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useElements, useStripe, CardElement, PaymentElement } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom'; // To get dark mode context
 
 // Stripe Public Key
 const stripePromise = loadStripe('pk_test_51Q2hSHHz1ELVl9MVTQ651hh3KN64RyV6yakXXS3GMIp9l4Eu4kKV4fVClp0pT0g8k4b8LhouoL1U9A1RJrNE0kbQ00Ir1kEh99');
@@ -96,7 +97,7 @@ const DonationForm = ({ clientSecret }) => {
         </Row>
 
         <Form.Group className="mb-3">
-            <Form.Label>Or enter a custom amount:</Form.Label>
+            <Form.Label >Or enter a custom amount:</Form.Label>
             <Form.Control
             type="number"
             placeholder="Enter custom amount"
@@ -121,6 +122,8 @@ const Donation = () => {
     const [clientSecret, setClientSecret] = useState('');
     
     const [createPaymentIntent] = useMutation(CREATE_PAYMENT_INTENT);
+    const { isDarkMode } = useOutletContext(); // Use context to determine if dark mode is on
+
      // Fetch the clientSecret when the component mounts
      useEffect(() => {
         const fetchClientSecret = async () => {
@@ -139,7 +142,7 @@ const options = {
 };
 
 return (
-    <Container className="mt-5">
+    <Container className={`donation-container ${isDarkMode ? 'dark-mode' : ''} mt-5`}>
         <h1 className="text-center mb-4">Donate</h1>
         {clientSecret && (
             <Elements stripe={stripePromise} options={options} >

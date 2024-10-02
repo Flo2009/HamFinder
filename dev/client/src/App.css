@@ -11,6 +11,7 @@
   --border-color: #999;
   --heading-color: #333333;
   --hover-color: #000000;
+  --dropdown-text-color: #000000;
 }
 
 .dark-mode {
@@ -25,6 +26,7 @@
   --border-color: #555; /* Dark mode border */
   --heading-color: #f0f0f0;
   --hover-color: #ffffff; /* Hover color for dark mode */
+  --dropdown-text-color: #000000;
 }
 
 body, html {
@@ -134,6 +136,13 @@ h1 {
   transform: scale(1.03);
 }
 
+/* Donations Display */
+
+.navbar-donation:hover {
+  transform: none !important;
+  cursor: default;
+}
+
 /* search bar */
 
 /* Search Bar Container */
@@ -141,6 +150,7 @@ h1 {
   display: flex;
   align-items: center; /* Vertically center content */
   height: 100%; /* Match container height */
+  flex-wrap: nowrap;
 }
 
 .custom-search-bar {
@@ -150,6 +160,7 @@ h1 {
   padding: 10px;
   border-radius: 25px;
   border: 1px solid var(--border-color);
+  flex: 1;
 }
 
 /* Dropdown Wrapper */
@@ -160,6 +171,7 @@ h1 {
   vertical-align: middle; /* Align with search bar and button */
   margin-left: 10px; /* Space between search bar and dropdown */
   margin-right: 10px; /* Space between dropdown and submit button */
+  white-space: nowrap;
 }
 
 /* Dropdown Button */
@@ -197,19 +209,19 @@ h1 {
 
 /* Dropdown Menu Items */
 .my-custom-dropdown .dropdown-item {
-  color: var(--text-color);
+  color: var(--dropdown-text-color);
   padding: 10px 20px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .my-custom-dropdown .dropdown-item:hover {
   background-color: #80C2B0;
-  color: var(--button-text-color);
+  color: var(--dropdown-text-color);
 }
 
 .my-custom-dropdown .dropdown-item:active {
   background-color: #397d3d;
-  color: var(--button-text-color);
+  color: var(--dropdown-text-color);
 }
 
 /* Submit Button */
@@ -225,6 +237,7 @@ h1 {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important; /* Ensure the text is vertically centered */
+  white-space: nowrap;
 }
 
 .custom-submit-btn:hover {
@@ -347,7 +360,7 @@ h1 {
 /* Forms */
 .form-control {
   background-color: var(--form-background-color);
-  color: var(--form-text-color);
+  color: var(--form-text-color) !important;
   border: 0.5px solid var(--border-color); /* Rugged form borders */
   border-radius: 4px;
   padding: 10px;
@@ -368,10 +381,10 @@ input[type="text"]::placeholder {
   color: var(--form-text-color);
 }
 
-.dark-mode input[type="text"] {
-  background-color: var(--form-background-color);
-  color: var(--form-text-color);
-  border: 1px solid var(--border-color);
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--hover-color); /* Apply hover color on focus */
+  box-shadow: 0 0 5px var(--hover-color); /* Add a subtle glow effect */
 }
 
 .dark-mode input[type="text"]::placeholder {
@@ -425,18 +438,26 @@ input[type="text"]::placeholder {
 .switch-label {
   display: none; /* Hide the label, since you want only the switch */
 }
-/* src/components/AboutUs.css */
+
+/* About Us Page */
+
+/* About Us Container */
 .about-us-container {
+  min-height: 100vh; /* Full viewport height */
   padding: 20px;
   font-family: Arial, sans-serif;
   text-align: center;
+  background-color: var(--background-color); /* Sync with dark mode */
+  color: var(--text-color); /* Sync with dark mode */
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
 
-
-/* About Us Page*/
+/* About Us Header */
 .about-us-header {
-  background-color: #f4f4f4;
+  background-color: var(--card-background-color); /* Sync with card background */
+  color: var(--heading-color);
   padding: 50px 0;
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 .about-us-header h1 {
@@ -446,21 +467,25 @@ input[type="text"]::placeholder {
 
 .about-us-header p {
   font-size: 1.2rem;
-  color: #555;
+  color: var(--text-color); /* Sync paragraph text color */
 }
 
+/* About Us Content */
 .about-us-content {
   padding: 30px 0;
 }
 
 .about-us-content section {
   margin-bottom: 40px;
+  color: var(--text-color); /* Sync section text color */
 }
 
+/* About Us Footer */
 .about-us-footer {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--navbar-background-color); /* Sync with navbar background */
+  color: var(--text-color); /* Sync with text color */
   padding: 20px;
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 .about-us-footer h3 {
@@ -470,7 +495,101 @@ input[type="text"]::placeholder {
 .about-us-footer p {
   margin: 5px 0;
 }
-.navbar-donation {
-  padding-top: 8px;
-  padding-left: 20px;
+
+/* Donation page */
+
+/* Donation Page Container */
+.donation-container {
+  min-height: 100vh; /* Full viewport height */
+  background-color: var(--background-color); /* Sync with dark mode */
+  color: var(--text-color); /* Sync with dark mode */
+  padding-top: 20px;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Donation Form Labels */
+.donation-container label {
+  color: var(--text-color);
+}
+
+/* Stripe Payment Element */
+.PaymentElement {
+  background-color: var(--form-background-color);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.6s ease, border-color 0.6s ease;
+}
+
+/* Button styling */
+.donation-container .btn {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.donation-container .btn:hover {
+  transform: scale(1.05);
+}
+
+/* Dark Mode Button Styles */
+.dark-mode .donation-container .btn {
+  background-color: var(--card-background-color);
+  color: var(--text-color);
+}
+
+.dark-mode .donation-container .btn:hover {
+  background-color: var(--hover-color);
+}
+
+/* Text Centering */
+.donation-container .text-center {
+  margin-bottom: 20px;
+}
+
+/* Donation Form input */
+#my-custom-form-input {
+  background-color: var(--form-background-color);
+  text-decoration: none;
+  color: white !important;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Modal Styles for Dark Mode */
+.dark-mode .modal-content {
+  background-color: var(--card-background-color); /* Set modal background for dark mode */
+  color: var(--text-color); /* Set text color for dark mode */
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+.dark-mode .modal-header {
+  border-bottom: 1px solid var(--border-color); /* Match border color with dark mode */
+}
+
+.dark-mode .modal-footer {
+  border-top: 1px solid var(--border-color); /* Match border color with dark mode */
+}
+
+/* Input Fields for Dark Mode */
+.dark-mode .form-control {
+  background-color: var(--form-background-color); /* Darker background for input fields */
+  color: var(--text-color); /* Text color for dark mode */
+  border: 1px solid var(--border-color); /* Border color for input fields */
+}
+
+.dark-mode input::placeholder {
+  color: var(--form-text-color); /* Placeholder text color */
+}
+
+.dark-mode .btn-primary {
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: none;
+}
+
+.dark-mode .modal-title {
+  color: var(--text-color); /* Title color in dark mode */
 }
