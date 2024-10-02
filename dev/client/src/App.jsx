@@ -1,8 +1,8 @@
 import { useState, useEffect} from 'react';
 import { Outlet } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import Navbar from './components/Navbar';
+import { setContext } from '@apollo/client/link/context';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
