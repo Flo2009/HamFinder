@@ -1,11 +1,14 @@
-//'https://donate.stripe.com/test_8wM6so2Ix2jc8Qo3cc'
 // src/components/AboutUs.js
 import React from 'react';
-import '../App.css'; // Optional: Use if you're using external CSS for styling.
+import '../App.css';
+import { useOutletContext } from 'react-router-dom'; // To get dark mode context
 
 const AboutUs = () => {
+
+  const { isDarkMode } = useOutletContext();
+
   return (
-    <div className="about-us-container">
+    <div className={`about-us-container ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="about-us-header">
         <h1>About Us</h1>
         <p>Welcome to Our Company</p>
