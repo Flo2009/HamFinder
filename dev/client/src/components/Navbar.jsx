@@ -17,6 +17,7 @@ const stripePromise = loadStripe('pk_test_8wM6so2Ix2jc8Qo3cc')
 const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
+  const [expanded, setExpanded] = useState(false); // Control navbar collapse
   const isLoggedIn = Auth.loggedIn(); 
 
   const { loading: userLoading, error: userError, data: userData, refetch } = useQuery(ME_DONATION, {
@@ -34,6 +35,12 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
     window.location.reload(); // Force page refresh
   };
   console.log(userData);
+
+  // Toggles the navbar collapse
+  const handleToggle = () => setExpanded(!expanded);
+
+  // Closes the navbar after clicking a link
+  const closeNavbar = () => setExpanded(false);
 
   // Re-fetch the donation data on page redirect or load
   useEffect(() => {
@@ -58,7 +65,14 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
   
   return (
     <>
-      <Navbar className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`} bg='dark' variant='dark' expand='lg'>
+      <Navbar
+      expanded={expanded}
+      onToggle={handleToggle}
+      className={`navbar my-custom-navbar ${isDarkMode ? 'dark-mode' : ''}`}
+      bg='dark'
+      variant='dark'
+      expand='lg'
+      >
         <Container fluid>
           <Navbar.Brand 
             className="hamfinder-custom" // Add inline styles
@@ -72,11 +86,11 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
               id="hamfinder-logo"
             />
             <span className="hamfinder-ham">Ham</span><span className="hamfinder-finder">Finder</span>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
+            </Navbar.Brand>
+          <Navbar.Toggle onClick={handleToggle} />
+          <Navbar.Collapse>
             <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/aboutus'>
+              <Nav.Link as={Link} to='/aboutus' onClick={closeNavbar}>
                 About
               </Nav.Link>
               {/* if user is logged in show saved stations and logout */}
@@ -88,11 +102,13 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
                   <Nav.Link as={Link} to='/saved'>
                     My Ham
                   </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                  <Nav.Link onClick={Auth.logout}>
+                    Logout
+                  </Nav.Link>
                   {userData && userData.me.donated && (
-                    <div className="navbar-donation">
-                      <span>Donated Ham: ${totalDonatedByUser}</span>
-                    </div>
+                    <Nav.Link className="navbar-donation">
+                      Donated Ham: ${totalDonatedByUser}
+                    </Nav.Link>
                   )}
                 </>
               ) : (
@@ -100,9 +116,9 @@ const AppNavbar = ({ isDarkMode, setIsDarkMode }) => {
               )}
                {/* Display total donations across all users */}
                {!totalLoading && !totalError && (
-                <div className="navbar-donation">
-                  <span>Total Ham: ${totalDonations}</span>
-                </div>
+                <Nav.Link className="navbar-donation">
+                  Total Ham: ${totalDonations}
+                </Nav.Link>
               )}
               {/* Dark Mode Toggle Button */}
               <div
