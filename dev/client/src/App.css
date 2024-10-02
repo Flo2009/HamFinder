@@ -347,7 +347,7 @@ h1 {
 /* Forms */
 .form-control {
   background-color: var(--form-background-color);
-  color: var(--form-text-color);
+  color: var(--form-text-color) !important;
   border: 0.5px solid var(--border-color); /* Rugged form borders */
   border-radius: 4px;
   padding: 10px;
@@ -368,10 +368,10 @@ input[type="text"]::placeholder {
   color: var(--form-text-color);
 }
 
-.dark-mode input[type="text"] {
-  background-color: var(--form-background-color);
-  color: var(--form-text-color);
-  border: 1px solid var(--border-color);
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--hover-color); /* Apply hover color on focus */
+  box-shadow: 0 0 5px var(--hover-color); /* Add a subtle glow effect */
 }
 
 .dark-mode input[type="text"]::placeholder {
@@ -426,6 +426,8 @@ input[type="text"]::placeholder {
   display: none; /* Hide the label, since you want only the switch */
 }
 
+/* About Us Page */
+
 /* About Us Container */
 .about-us-container {
   min-height: 100vh; /* Full viewport height */
@@ -479,4 +481,66 @@ input[type="text"]::placeholder {
 
 .about-us-footer p {
   margin: 5px 0;
+}
+
+/* Donation page */
+
+/* Donation Page Container */
+.donation-container {
+  min-height: 100vh; /* Full viewport height */
+  background-color: var(--background-color); /* Sync with dark mode */
+  color: var(--text-color); /* Sync with dark mode */
+  padding-top: 20px;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Donation Form Labels */
+.donation-container label {
+  color: var(--text-color);
+}
+
+/* Stripe Payment Element */
+.PaymentElement {
+  background-color: var(--form-background-color);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.6s ease, border-color 0.6s ease;
+}
+
+/* Button styling */
+.donation-container .btn {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.donation-container .btn:hover {
+  transform: scale(1.05);
+}
+
+/* Dark Mode Button Styles */
+.dark-mode .donation-container .btn {
+  background-color: var(--card-background-color);
+  color: var(--text-color);
+}
+
+.dark-mode .donation-container .btn:hover {
+  background-color: var(--hover-color);
+}
+
+/* Text Centering */
+.donation-container .text-center {
+  margin-bottom: 20px;
+}
+
+/* Donation Form input */
+#my-custom-form-input {
+  background-color: var(--form-background-color);
+  text-decoration: none;
+  color: white !important;
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
