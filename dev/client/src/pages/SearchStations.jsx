@@ -229,8 +229,6 @@ const SearchStations = () => {
                   </div>
                 </Col>
                 <Col xs={2} md={2} className="d-flex align-items-center">
-                      {/* {2} md={2}  */}
-                  {/* <div className="d-flex justify-content-start align-items-center flex-wrap"> */}
                       <div className="dropdown my-custom-dropdown">
                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           {language} {/* Display the selected country */}
@@ -246,7 +244,6 @@ const SearchStations = () => {
                       <Button className='custom-submit-btn' type='submit' variant='success' size='lg'>
                         Go
                       </Button>
-                  {/* </div>     */}
                 </Col>
               </Row>
             </Form>
