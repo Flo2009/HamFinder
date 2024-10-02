@@ -162,22 +162,18 @@ Define the following types and mutations:
 - Express.js
 - Authentication (JWT or similar)
 
-Screen Shot:
-![Screenshot 2024-09-25 at 8 47 42 PM](https://github.com/user-attachments/assets/f834da76-918c-4fe4-9070-72e7af8a3867)
+Log In:<br>
+![LogIn](./images/Login.gif)
 
-![Screenshot 2024-09-25 at 8 49 20 PM](https://github.com/user-attachments/assets/913da1dd-e6cf-4158-a09e-ad9686836f61)
+Dark Mode:<br>
+![DarkMode](./images/DarkMode.gif)
 
-![Screenshot 2024-09-25 at 8 50 39 PM](https://github.com/user-attachments/assets/06e6fa96-b712-4320-a7ef-2655bd55dd6d)
+My Ham:<br>
+![MyHam](./images/MyHam.gif)
 
-Dark Mode
-![Screenshot 2024-09-25 at 8 51 59 PM](https://github.com/user-attachments/assets/81457c69-42ec-4c16-8b3f-64319bb3096b)
-Login
-![Screenshot 2024-09-25 at 8 53 46 PM](https://github.com/user-attachments/assets/dab178a0-f03f-4ea5-9f7b-03f304f8af7a)
-SignUp 
+Donation:<br>
+![Donation](./images/Donation.gif)
 
-![Screenshot 2024-09-25 at 8 54 03 PM](https://github.com/user-attachments/assets/dcf1a4e5-bc1f-4be2-ac6a-e4b0e5ee9116)
-Saved Favourite Radio Station by user
-![Screenshot 2024-09-25 at 9 01 46 PM](https://github.com/user-attachments/assets/b7b3d999-37d2-4ed2-8bdf-7ccb71ee9505)
 
 ## Credits
 
@@ -205,8 +201,14 @@ https://github.com/Flo2009/HamFinder
 
 ## Contact
 
-Flo2009
+Flo2009<br>
+wilsacker<br>
+muktadir1090<br>
 
-https://github/Flo2009
+https://github/Flo2009<br>
+https://github/wilsacker<br>
+https://github/muktadir<br>
 
-supersuse81@gmail.com
+supersuse81@gmail.com<br>
+williamsuttona@gmail.com<br>
+muktadir1090@gmail.com<br>

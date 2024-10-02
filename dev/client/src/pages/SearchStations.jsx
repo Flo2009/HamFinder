@@ -228,22 +228,25 @@ const SearchStations = () => {
                       className="custom-search-bar"/>
                   </div>
                 </Col>
-                <Col xs={2} md={2}>
-                  <div className="dropdown my-custom-dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {language} {/* Display the selected country */}
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                      <button className="dropdown-item" type="button"onClick={() =>handleLanguage("US")}>USA</button>
-                      <button className="dropdown-item" type="button"onClick={() => handleLanguage("DE")}>Germany</button>
-                      <button className="dropdown-item" type="button"onClick={() => handleLanguage("FR")}>France</button>
-                    </div>
-                  </div>
+                <Col xs={12} md={6} className="d-flex align-items-center">
+                      {/* {2} md={2}  */}
+                  {/* <div className="d-flex justify-content-start align-items-center flex-wrap"> */}
+                      <div className="dropdown my-custom-dropdown">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {language} {/* Display the selected country */}
+                        </button>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <button className="dropdown-item" type="button"onClick={() =>handleLanguage("US")}>USA</button>
+                          <button className="dropdown-item" type="button"onClick={() => handleLanguage("DE")}>Germany</button>
+                          <button className="dropdown-item" type="button"onClick={() => handleLanguage("FR")}>France</button>
+                        </div>
+                      </div>
                 </Col>
                 <Col xs={1} md={1}>
-                  <Button className='custom-submit-btn' type='submit' variant='success' size='lg'>
-                    Go
-                  </Button>
+                      <Button className='custom-submit-btn' type='submit' variant='success' size='lg'>
+                        Go
+                      </Button>
+                  {/* </div>     */}
                 </Col>
               </Row>
             </Form>
