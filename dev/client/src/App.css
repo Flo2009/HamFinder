@@ -557,3 +557,39 @@ input[type="text"]:focus {
   color: white !important;
   transition: background-color 0.6s ease, color 0.6s ease;
 }
+
+/* Modal Styles for Dark Mode */
+.dark-mode .modal-content {
+  background-color: var(--card-background-color); /* Set modal background for dark mode */
+  color: var(--text-color); /* Set text color for dark mode */
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+.dark-mode .modal-header {
+  border-bottom: 1px solid var(--border-color); /* Match border color with dark mode */
+}
+
+.dark-mode .modal-footer {
+  border-top: 1px solid var(--border-color); /* Match border color with dark mode */
+}
+
+/* Input Fields for Dark Mode */
+.dark-mode .form-control {
+  background-color: var(--form-background-color); /* Darker background for input fields */
+  color: var(--text-color); /* Text color for dark mode */
+  border: 1px solid var(--border-color); /* Border color for input fields */
+}
+
+.dark-mode input::placeholder {
+  color: var(--form-text-color); /* Placeholder text color */
+}
+
+.dark-mode .btn-primary {
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: none;
+}
+
+.dark-mode .modal-title {
+  color: var(--text-color); /* Title color in dark mode */
+}
