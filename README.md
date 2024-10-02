@@ -3,13 +3,28 @@
 
 ## Description
 
-This is a radio station search engine that allows users to search for new radio stations to listen to and maintain a list of favorite stations. Users can search for radio stations based on location or genre using a public radio station API, create accounts, log in, and save stations to their personal account for future reference. The application is built with a GraphQL API using Apollo Server.
+This is a radio station search engine that allows users to search for new radio stations to listen to and maintain a list of favorite stations. Users can search for radio stations based on location or genre using a public radio station API, create accounts, log in, and save stations to their personal account for future reference. Users can donate and the total donated amount is also shown. The application is built with a GraphQL API using Apollo Server.
 
-## User Story
+## Table of Contents
+
+- [UserStory](#userstory)
+- [AcceptanceCriteria](#acceptancecriteria)
+- [Installation](#installation)
+- [BackEndTasks](#backendtasks)
+- [FrontEndTasks](#frontendtasks)
+- [Technologies](#technologies)
+- [Credits](#credits)
+- [License](#license)
+- [Badges](#badges)
+- [Links](#links)
+- [Contact](#contact)
+
+
+## UserStory
 
 As a radio listener, I want to search for new radio stations to listen to so that I can keep a list of my favorite stations.
 
-## Acceptance Criteria
+## AcceptanceCriteria
 
 - **GIVEN** a radio station search engine
   - **WHEN** I load the search engine
@@ -45,13 +60,11 @@ As a radio listener, I want to search for new radio stations to listen to so tha
      **WHEN** I click on the toggle dark mode to light  
  - **THEN** the page changes it color to light
    **WHEN** I navigated to a stripe page and able to make a payment/donate using debit/credit card 
- - **THEN** I am able to see that the payment is made with a confirmation page displayinging information about the confirmed transaction.
+ - **THEN** I am able to see that the payment is made with a confirmation displayinging information about the confirmed transaction.
    **WHEN** I make a payment/donate
- - **THEN**I am able to see a confirmation of the transaction made
-  **WHEN** 
-- **THEN**
-
-
+ - **THEN** my contrbutions show in the Naviagation Bar 
+  **WHEN** I start the app
+- **THEN** I see the total donations contributed by all signed-up users
 
 ## Installation
 
@@ -65,12 +78,12 @@ As a radio listener, I want to search for new radio stations to listen to so tha
     npm install
     ```
 
-3. Run the application locally:
+3. Run the application locally from the `dev` folder:
     ```bash
-    npm start
+    npm run develop
     ```
 
-## Back-End Tasks
+## BackEndTasks
 
 ### `auth.js`
 - Update the authentication middleware to work with the GraphQL API for verifying users.
@@ -78,23 +91,26 @@ As a radio listener, I want to search for new radio stations to listen to so tha
 ### `server.js`
 - Implement Apollo Server and apply it as middleware to the Express server.
 
-### Schemas Directory
+### SchemasDirectory
 - `index.js`: Export `typeDefs` and `resolvers`.
 - `resolvers.js`: Define query and mutation functionality for the GraphQL API using Mongoose models. Use `user-controller.js` as a guide for handling user-related functionality.
 
-### GraphQL Type Definitions (`typeDefs.js`)
+### GraphQlTypeDefinitions (`typeDefs.js`)
 Define the following types and mutations:
 
 - **Query Type**:
-  - `me`: Returns a `User` type.
+  - `me`: Returns a `User` type with user and station information.
+  - `allDonations`: Returns all donations over all signed up users. 
 
 - **Mutation Type**:
   - `login`: Accepts email and password as parameters; returns an `Auth` type.
   - `addUser`: Accepts username, email, and password as parameters; returns an `Auth` type.
   - `saveStation`: Accepts station name, frequency, genre, stationId, and link as parameters; returns a `User` type.
   - `removeStation`: Accepts stationId as a parameter; returns a `User` type.
+  - `createPaymentIntent`: Returns the `PaymentIntentResponse` for Sripe.
+  - `updateUserDonation`: Accepts the donation amount as a parameter; returns a `User` type.
 
-### GraphQL Types
+### GraphQlTypes
 
 - **User**:
   - `_id`, `username`, `email`, `stationCount`, `savedStations`
@@ -104,16 +120,20 @@ Define the following types and mutations:
   - `token`, `user`
 
 
-## Front-End Tasks
+## FrontEndTasks
 
 ### `queries.js`
 - Create `GET_ME` query to retrieve logged-in user's data.
+- Create `ME_DONATION` query to retrieve the donation data of the user.
+- Create `GET_TOTAL_DONATIONS` query to retrieve the donations from all signed up users.
 
 ### `mutations.js`
 - `LOGIN_USER`: Execute the login mutation.
 - `ADD_USER`: Execute the addUser mutation.
 - `SAVE_STATION`: Execute the  saveStation mutation.
 - `REMOVE_STATION`: Execute the removeStation mutation.
+- `CREATE_PAYMENT_INTENT`: Generate Payment Intent for Stripe.
+- `UPDATE_USER_DONATION`: Update the user donations.
 
 ### `App.jsx`
 - Use Apollo Provider to wrap the app for GraphQL communication.
@@ -159,6 +179,34 @@ SignUp
 Saved Favourite Radio Station by user
 ![Screenshot 2024-09-25 at 9 01 46 PM](https://github.com/user-attachments/assets/b7b3d999-37d2-4ed2-8bdf-7ccb71ee9505)
 
+## Credits
+
+https://stackoverflow.com<br>
+https://developer.mozilla.org<br>
+
 ## License
 
-This project is licensed under the MIT License.
+https://opensource.org/license/mit
+
+## Badges
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+## Links
+
+Deployed application is available under this link:
+
+https://hamfinder.onrender.com/
+
+GitHub Link
+
+https://github.com/Flo2009/HamFinder
+
+## Contact
+
+Flo2009
+
+https://github/Flo2009
+
+supersuse81@gmail.com
